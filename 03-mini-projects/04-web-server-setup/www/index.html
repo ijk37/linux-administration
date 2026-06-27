@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Linux Server</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Courier New', monospace;
+            background: #0d1117;
+            color: #c9d1d9;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            flex-direction: column;
+        }
+        .card {
+            border: 1px solid #30363d;
+            border-radius: 8px;
+            padding: 2rem 3rem;
+            text-align: center;
+            max-width: 500px;
+        }
+        h1 { color: #58a6ff; font-size: 2rem; margin-bottom: 1rem; }
+        p  { color: #8b949e; line-height: 1.6; }
+        .badge {
+            display: inline-block;
+            background: #238636;
+            color: #fff;
+            padding: 0.3rem 0.8rem;
+            border-radius: 20px;
+            margin-top: 1rem;
+            font-size: 0.85rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>&#128023; It works!</h1>
+        <p>Your Nginx web server is running successfully.</p>
+        <p>Replace this file with your own content at <code>/var/www/mysite/index.html</code></p>
+        <span class="badge">Nginx &#10003; Running</span>
+    </div>
+</body>
+</html>
