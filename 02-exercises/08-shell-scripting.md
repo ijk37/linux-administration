@@ -5,254 +5,453 @@
 
 ---
 
-## Objectives
+## Before You Start
 
-- Write and execute bash scripts
-- Use variables, conditionals, loops, and functions
-- Handle arguments and user input
-- Practice error handling
+Read [Note 08](../01-notes/08-shell-scripting.md) first.
 
----
-
-## Exercise 8.1 — First Script
-
-Create `~/scripts/hello.sh`:
+Shell scripting is where everything comes together. You'll write real scripts that do useful things. Create all your scripts in `~/linux-practice/scripts/`.
 
 ```bash
-mkdir -p ~/scripts
-
-cat > ~/scripts/hello.sh << 'EOF'
-#!/bin/bash
-NAME=${1:-"World"}
-echo "Hello, $NAME!"
-echo "Script: $0"
-echo "Date: $(date)"
-EOF
-
-chmod +x ~/scripts/hello.sh
-
-# Run it
-~/scripts/hello.sh
-~/scripts/hello.sh "Jahid"
+mkdir -p ~/linux-practice/scripts
 ```
 
 ---
 
-## Exercise 8.2 — Variables & Arithmetic
+## Exercise 8.1 — Your First Script
 
-Create `~/scripts/calc.sh`:
+**Step 1:** Create the script file:
 
 ```bash
-cat > ~/scripts/calc.sh << 'EOF'
+nano ~/linux-practice/scripts/hello.sh
+```
+
+Type this content exactly (or copy it):
+
+```bash
 #!/bin/bash
+echo "Hello, World!"
+echo "Today is: $(date)"
+echo "I am logged in as: $(whoami)"
+echo "My home directory is: $HOME"
+```
+
+Save and exit nano: press `Ctrl + O`, then Enter, then `Ctrl + X`.
+
+**Step 2:** Try running it directly:
+
+```bash
+~/linux-practice/scripts/hello.sh
+```
+
+Expected error:
+```
+-bash: /home/jahid/linux-practice/scripts/hello.sh: Permission denied
+```
+
+The file exists but is not executable yet.
+
+**Step 3:** Make it executable:
+
+```bash
+chmod +x ~/linux-practice/scripts/hello.sh
+```
+
+**Step 4:** Run it again:
+
+```bash
+~/linux-practice/scripts/hello.sh
+```
+
+Expected output:
+```
+Hello, World!
+Today is: Thu Jun 20 14:32:01 UTC 2024
+I am logged in as: jahid
+My home directory is: /home/jahid
+```
+
+**Reflect:** What does `$(date)` do? What does `$HOME` do? What's the difference?
+
+---
+
+## Exercise 8.2 — Variables and Arguments
+
+**Step 1:** Create a script that accepts arguments:
+
+```bash
+nano ~/linux-practice/scripts/greet.sh
+```
+
+Content:
+
+```bash
+#!/bin/bash
+
+# Check that exactly one argument was provided
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <name>"
+    echo "Example: $0 Alice"
+    exit 1
+fi
+
+NAME=$1
+echo "Hello, $NAME!"
+echo "You were greeted at: $(date)"
+```
+
+Save, exit, make executable:
+
+```bash
+chmod +x ~/linux-practice/scripts/greet.sh
+```
+
+**Step 2:** Test it correctly:
+
+```bash
+~/linux-practice/scripts/greet.sh Jahid
+```
+
+Expected output:
+```
+Hello, Jahid!
+You were greeted at: Thu Jun 20 14:32:01 UTC 2024
+```
+
+**Step 3:** Test the error handling by providing no argument:
+
+```bash
+~/linux-practice/scripts/greet.sh
+```
+
+Expected output:
+```
+Usage: /home/jahid/linux-practice/scripts/greet.sh <name>
+Example: /home/jahid/linux-practice/scripts/greet.sh Alice
+```
+
+**Understand the script:**
+- `$#` holds the number of arguments
+- `-ne 1` means "not equal to 1"
+- `$0` is the script's own name
+- `$1` is the first argument
+- `exit 1` quits the script with an error code (non-zero = failure)
+
+---
+
+## Exercise 8.3 — Arithmetic
+
+**Step 1:** Create a calculator script:
+
+```bash
+nano ~/linux-practice/scripts/calc.sh
+```
+
+Content:
+
+```bash
+#!/bin/bash
+
+if [ $# -ne 2 ]; then
+    echo "Usage: $0 <number1> <number2>"
+    exit 1
+fi
+
 A=$1
 B=$2
 
-if [ -z "$A" ] || [ -z "$B" ]; then
-    echo "Usage: $0 <num1> <num2>"
-    exit 1
-fi
+echo "Numbers: $A and $B"
+echo "Addition:       $A + $B = $((A + B))"
+echo "Subtraction:    $A - $B = $((A - B))"
+echo "Multiplication: $A x $B = $((A * B))"
 
-echo "A = $A, B = $B"
-echo "Sum:        $((A + B))"
-echo "Difference: $((A - B))"
-echo "Product:    $((A * B))"
-echo "Quotient:   $((A / B))"
-echo "Remainder:  $((A % B))"
-EOF
-
-chmod +x ~/scripts/calc.sh
-~/scripts/calc.sh 10 3
-~/scripts/calc.sh 25 7
-```
-
----
-
-## Exercise 8.3 — Conditionals
-
-Create `~/scripts/grade.sh` that takes a score and prints a grade:
-
-```bash
-cat > ~/scripts/grade.sh << 'EOF'
-#!/bin/bash
-SCORE=$1
-
-if [ -z "$SCORE" ]; then
-    echo "Usage: $0 <score 0-100>"
-    exit 1
-fi
-
-if [ $SCORE -ge 90 ]; then
-    echo "Grade: A"
-elif [ $SCORE -ge 80 ]; then
-    echo "Grade: B"
-elif [ $SCORE -ge 70 ]; then
-    echo "Grade: C"
-elif [ $SCORE -ge 60 ]; then
-    echo "Grade: D"
+# Avoid division by zero
+if [ $B -eq 0 ]; then
+    echo "Division: cannot divide by zero"
 else
-    echo "Grade: F"
+    echo "Division:       $A / $B = $((A / B))"
+    echo "Remainder:      $A % $B = $((A % B))"
 fi
-EOF
+```
 
-chmod +x ~/scripts/grade.sh
-for score in 95 85 73 62 45; do
-    echo -n "Score $score → "
-    ~/scripts/grade.sh $score
-done
+```bash
+chmod +x ~/linux-practice/scripts/calc.sh
+```
+
+**Step 2:** Test it:
+
+```bash
+~/linux-practice/scripts/calc.sh 15 4
+```
+
+Expected output:
+```
+Numbers: 15 and 4
+Addition:       15 + 4 = 19
+Subtraction:    15 - 4 = 11
+Multiplication: 15 x 4 = 60
+Division:       15 / 4 = 3
+Remainder:      15 % 4 = 3
+```
+
+Notice division gives `3` not `3.75` — bash only does integer math.
+
+**Step 3:** Test the division-by-zero protection:
+
+```bash
+~/linux-practice/scripts/calc.sh 10 0
 ```
 
 ---
 
-## Exercise 8.4 — Loops
+## Exercise 8.4 — Conditionals
 
-Create `~/scripts/file-report.sh` that loops through files in a directory:
+**Step 1:** Create a script that checks if a file or directory exists:
 
 ```bash
-cat > ~/scripts/file-report.sh << 'EOF'
-#!/bin/bash
-DIR=${1:-.}
+nano ~/linux-practice/scripts/check-path.sh
+```
 
-echo "Files in $DIR:"
-echo "----------------------------"
+Content:
+
+```bash
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo "Usage: $0 <path>"
+    exit 1
+fi
+
+PATH_TO_CHECK=$1
+
+if [ -f "$PATH_TO_CHECK" ]; then
+    echo "'$PATH_TO_CHECK' is a regular file."
+    echo "Size: $(du -sh "$PATH_TO_CHECK" | cut -f1)"
+
+elif [ -d "$PATH_TO_CHECK" ]; then
+    echo "'$PATH_TO_CHECK' is a directory."
+    FILE_COUNT=$(ls "$PATH_TO_CHECK" | wc -l)
+    echo "It contains $FILE_COUNT items."
+
+elif [ -e "$PATH_TO_CHECK" ]; then
+    echo "'$PATH_TO_CHECK' exists but is neither a file nor a directory."
+
+else
+    echo "'$PATH_TO_CHECK' does not exist."
+    exit 1
+fi
+```
+
+```bash
+chmod +x ~/linux-practice/scripts/check-path.sh
+```
+
+**Step 2:** Test it with several different paths:
+
+```bash
+~/linux-practice/scripts/check-path.sh /etc/passwd
+~/linux-practice/scripts/check-path.sh /home
+~/linux-practice/scripts/check-path.sh /tmp
+~/linux-practice/scripts/check-path.sh /nonexistent/path
+```
+
+**Understand the conditions:**
+- `-f` = is a regular file
+- `-d` = is a directory
+- `-e` = exists (any type)
+- The `"quotes"` around `$PATH_TO_CHECK` are important — if the path has spaces, unquoted variables would break the command
+
+---
+
+## Exercise 8.5 — Loops
+
+**Step 1:** Create a script that processes multiple files:
+
+```bash
+nano ~/linux-practice/scripts/file-report.sh
+```
+
+Content:
+
+```bash
+#!/bin/bash
+
+# Use the provided directory, or default to current directory
+DIRECTORY=${1:-.}
+
+echo "============================="
+echo "File Report for: $DIRECTORY"
+echo "============================="
+
+if [ ! -d "$DIRECTORY" ]; then
+    echo "Error: '$DIRECTORY' is not a directory."
+    exit 1
+fi
 
 COUNT=0
-for FILE in "$DIR"/*; do
+TOTAL_SIZE=0
+
+for FILE in "$DIRECTORY"/*; do
+    # Skip if no files match (empty directory)
+    [ -e "$FILE" ] || continue
+
     if [ -f "$FILE" ]; then
-        SIZE=$(du -sh "$FILE" 2>/dev/null | cut -f1)
-        echo "  $FILE ($SIZE)"
-        ((COUNT++))
+        SIZE=$(wc -c < "$FILE")       # size in bytes
+        echo "  FILE: $(basename "$FILE")  ($SIZE bytes)"
+        COUNT=$((COUNT + 1))
+        TOTAL_SIZE=$((TOTAL_SIZE + SIZE))
+    elif [ -d "$FILE" ]; then
+        echo "  DIR:  $(basename "$FILE")/"
     fi
 done
 
-echo "----------------------------"
+echo "-----------------------------"
 echo "Total files: $COUNT"
-EOF
-
-chmod +x ~/scripts/file-report.sh
-~/scripts/file-report.sh ~/scripts/
-~/scripts/file-report.sh /etc/
+echo "Total size: $TOTAL_SIZE bytes"
 ```
+
+```bash
+chmod +x ~/linux-practice/scripts/file-report.sh
+```
+
+**Step 2:** Run it on your practice directory:
+
+```bash
+~/linux-practice/scripts/file-report.sh ~/linux-practice/notes/
+```
+
+**Step 3:** Run it without an argument (uses current directory):
+
+```bash
+cd ~/linux-practice/scripts/
+~/linux-practice/scripts/file-report.sh
+```
+
+**Understand the loop:**
+- `${1:-.}` means "use argument $1, but if it's empty, use `.` (current directory)"
+- `for FILE in "$DIRECTORY"/*` loops over every item in the directory
+- `[ -e "$FILE" ] || continue` — if the glob finds nothing, skip gracefully
+- `basename "$FILE"` strips the directory prefix, leaving just the filename
 
 ---
 
-## Exercise 8.5 — Functions
+## Exercise 8.6 — Functions
 
-Create `~/scripts/utils.sh`:
+**Step 1:** Create a script with reusable functions:
 
 ```bash
-cat > ~/scripts/utils.sh << 'EOF'
+nano ~/linux-practice/scripts/system-info.sh
+```
+
+Content:
+
+```bash
 #!/bin/bash
 
-# Print a section header
-header() {
+# A function that prints a formatted section header
+print_header() {
     local TITLE=$1
-    local LEN=${#TITLE}
-    local LINE=$(printf '=%.0s' $(seq 1 $((LEN + 4))))
-    echo "$LINE"
-    echo "| $TITLE |"
-    echo "$LINE"
+    echo ""
+    echo "=== $TITLE ==="
 }
 
-# Check if a command exists
-require() {
+# A function that checks if a command exists
+check_command() {
     local CMD=$1
-    if ! command -v "$CMD" &>/dev/null; then
-        echo "Error: '$CMD' is not installed."
-        return 1
+    if command -v "$CMD" &>/dev/null; then
+        echo "  [FOUND]   $CMD  →  $(which $CMD)"
+    else
+        echo "  [MISSING] $CMD"
     fi
-    echo "'$CMD' found at $(which $CMD)"
 }
 
-# Log a message with timestamp
-log() {
-    echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*"
+# A function that prints a key=value pair
+info_line() {
+    printf "  %-20s %s\n" "$1:" "$2"
 }
 
-# Main
-header "System Check"
-log "Starting checks..."
-require bash
-require python3
-require git
-require docker
-log "Done."
-EOF
+# ── Main script ──────────────────────────────────────────────────────────────
 
-chmod +x ~/scripts/utils.sh
-~/scripts/utils.sh
+print_header "System"
+info_line "Hostname"     "$(hostname)"
+info_line "OS"           "$(grep PRETTY_NAME /etc/os-release | cut -d= -f2 | tr -d '"')"
+info_line "Kernel"       "$(uname -r)"
+info_line "Uptime"       "$(uptime -p)"
+info_line "Current user" "$(whoami)"
+
+print_header "Hardware"
+info_line "CPU cores"    "$(nproc)"
+info_line "RAM total"    "$(free -h | awk 'NR==2{print $2}')"
+info_line "Disk (root)"  "$(df -h / | awk 'NR==2{print $2 " total, " $4 " free"}')"
+
+print_header "Installed Tools"
+check_command bash
+check_command python3
+check_command git
+check_command curl
+check_command docker
+check_command nginx
+
+echo ""
 ```
-
----
-
-## Exercise 8.6 — Error Handling
-
-Create `~/scripts/safe-copy.sh`:
 
 ```bash
-cat > ~/scripts/safe-copy.sh << 'EOF'
-#!/bin/bash
-set -euo pipefail
-
-SOURCE=$1
-DEST=$2
-
-# Validate arguments
-if [ $# -ne 2 ]; then
-    echo "Usage: $0 <source> <destination>"
-    exit 1
-fi
-
-# Check source exists
-if [ ! -e "$SOURCE" ]; then
-    echo "Error: Source '$SOURCE' does not exist."
-    exit 2
-fi
-
-# Check destination directory exists
-DEST_DIR=$(dirname "$DEST")
-if [ ! -d "$DEST_DIR" ]; then
-    echo "Error: Destination directory '$DEST_DIR' does not exist."
-    exit 3
-fi
-
-# Warn if destination exists
-if [ -e "$DEST" ]; then
-    echo "Warning: '$DEST' already exists. Overwriting."
-fi
-
-cp "$SOURCE" "$DEST"
-echo "Copied '$SOURCE' → '$DEST'"
-EOF
-
-chmod +x ~/scripts/safe-copy.sh
-
-# Test it
-~/scripts/safe-copy.sh /etc/hostname /tmp/myhostname.txt
-cat /tmp/myhostname.txt
-
-# Test error handling
-~/scripts/safe-copy.sh /nonexistent/file.txt /tmp/ || echo "Exit code: $?"
+chmod +x ~/linux-practice/scripts/system-info.sh
+~/linux-practice/scripts/system-info.sh
 ```
+
+Expected output (example):
+```
+=== System ===
+  Hostname:            mycomputer
+  OS:                  Ubuntu 22.04.3 LTS
+  Kernel:              6.5.0-41-generic
+  Uptime:              up 3 days, 4 hours, 12 minutes
+  Current user:        jahid
+
+=== Hardware ===
+  CPU cores:           4
+  RAM total:           7.7G
+  Disk (root):         50G total, 32G free
+
+=== Installed Tools ===
+  [FOUND]   bash  →  /usr/bin/bash
+  [FOUND]   python3  →  /usr/bin/python3
+  [MISSING] docker
+  ...
+```
+
+**Understand the functions:**
+- `local TITLE=$1` — `local` makes the variable private to the function
+- `command -v "$CMD"` — checks if a command exists (better than `which` for this)
+- `&>/dev/null` — discards both standard output and error output
+- `printf "%-20s %s\n"` — formatted printing: `%-20s` = left-aligned, 20 chars wide
 
 ---
 
-## Challenge
+## Challenge — A Useful Script From Scratch
 
-Write a script `~/scripts/user-report.sh` that:
-1. Accepts no arguments
-2. Lists all users with UID >= 1000 (regular users) from `/etc/passwd`
-3. For each user, prints: username, home directory, and whether the home directory exists
-4. Counts and prints the total number of regular users at the end
+Write a script called `~/linux-practice/scripts/user-report.sh` that:
 
-Example output:
+1. Reads `/etc/passwd` and lists only "real" users (UID 1000 or above)
+2. For each user, prints:
+   - Username
+   - Their home directory
+   - Whether the home directory exists (`[EXISTS]` or `[MISSING]`)
+3. At the end, prints the total number of real users
+
+**Expected output format:**
 ```
-=== Regular Users ===
-jahid  /home/jahid  [EXISTS]
-alice  /home/alice  [MISSING]
----
-Total: 2 users
+=== Real User Accounts ===
+  jahid        /home/jahid     [EXISTS]
+  alice        /home/alice     [MISSING]
+=========================
+Total: 2 real user(s)
 ```
+
+**Hints:**
+- `awk -F: '$3 >= 1000 {print $1, $6}' /etc/passwd` prints username and home directory for real users
+- Use a `while read` loop to process each line
+- Use `[ -d "$HOME_DIR" ]` to check if the directory exists
 
 ---
 
