@@ -7,272 +7,325 @@
 
 ## Why Monitor a System?
 
-Monitoring helps you:
-- Detect resource exhaustion before it causes outages
-- Identify slow or runaway processes
-- Investigate incidents using logs
-- Establish performance baselines
+When a server starts slowing down or crashing, you need to be able to answer: *why?*
+
+System monitoring gives you the tools to answer questions like:
+- Is the CPU maxed out? Which process is causing it?
+- Is the machine running out of RAM?
+- Is the disk almost full?
+- What error messages appeared in the logs around the time of the problem?
+
+Think of monitoring tools as the gauges on a car dashboard — they tell you the health of the system at a glance.
 
 ---
 
-## CPU Monitoring
+## CPU — How Busy is the Processor?
+
+### `uptime` — Quick CPU load summary
 
 ```bash
-# Real-time CPU usage
-top
-htop
-
-# CPU info
-lscpu
-cat /proc/cpuinfo
-
-# Average load over 1, 5, 15 minutes
 uptime
-cat /proc/loadavg
-
-# Per-CPU usage (press '1' in top)
-mpstat 1          # install: apt install sysstat
-mpstat -P ALL 1   # all CPUs, 1-second intervals
 ```
 
-**Interpreting load average:**  
-A load of `1.0` on a 1-core system = 100% utilization.  
-On a 4-core system, `4.0` = 100%. Values above the CPU count mean the system is overloaded.
+**Example output:**
+```
+14:32:01 up 3 days, load average: 0.08, 0.42, 0.31
+```
+
+The three numbers at the end are the **load average** over the last 1 minute, 5 minutes, and 15 minutes.
+
+**What does load average mean?**
+- On a 1-core machine, load `1.0` = the CPU is 100% busy. Load `2.0` = jobs are waiting in queue.
+- On a 4-core machine, load `4.0` = 100% busy. Load `8.0` = twice as many jobs as the CPU can handle.
+
+A load average consistently **higher than your number of CPU cores** means the system is overloaded.
+
+How many cores do you have?
+
+```bash
+nproc
+```
+
+Prints the number of CPU cores.
 
 ---
 
-## Memory Monitoring
+### `top` — Live CPU and process monitor
 
 ```bash
-# Memory overview (human-readable)
+top
+```
+
+The top section shows system-wide stats. The bottom is a live list of processes.
+
+```
+top - 14:32:01 up 3 days
+Tasks: 152 total,   1 running, 151 sleeping
+%Cpu(s):  2.1 us,  0.5 sy,  0.0 ni, 97.4 id
+MiB Mem :   7832.0 total,   4200.0 free,   2100.0 used
+```
+
+Reading the CPU line `%Cpu(s): 2.1 us, 0.5 sy, 97.4 id`:
+- `us` (user) — CPU used by regular programs
+- `sy` (system) — CPU used by the Linux kernel itself
+- `id` (idle) — CPU doing nothing (97.4% idle = very relaxed system)
+
+Press `q` to quit, `M` to sort by memory, `P` to sort by CPU.
+
+---
+
+## Memory — How Much RAM is in Use?
+
+### `free -h` — Memory summary
+
+```bash
 free -h
-
-# Detailed memory info
-cat /proc/meminfo
-
-# Virtual memory statistics
-vmstat 1 5       # 5 samples, 1-second intervals
-
-# Memory usage by process
-ps aux --sort=-%mem | head -10
 ```
 
-### Understanding `free -h` Output
-
+**Example output:**
 ```
-              total   used    free   shared  buff/cache  available
-Mem:          7.7G    2.1G    3.2G    120M     2.4G        5.2G
-Swap:         2.0G    0B      2.0G
+              total    used    free   shared  buff/cache  available
+Mem:          7.7G    2.1G    3.2G    120M      2.4G       5.2G
+Swap:         2.0G      0B    2.0G
 ```
 
-- **used**: actively used memory
-- **buff/cache**: used by kernel for caching (can be reclaimed)
-- **available**: memory actually available for new processes
+The columns:
+- `total` — how much RAM the machine has
+- `used` — currently used by programs
+- `free` — completely unused
+- `buff/cache` — used by the kernel for caching (can be freed when needed)
+- **`available`** — the most useful number: how much RAM is actually available for new programs (includes reclaimable cache)
+
+The `available` column is what matters. If it's close to 0, your system is running out of memory.
+
+**Swap** is disk space used as emergency RAM when real RAM is full. If swap is heavily used, the system will be very slow (disk is much slower than RAM).
 
 ---
 
-## Disk Monitoring
+## Disk — Is the Drive Getting Full?
+
+### `df -h` — How full are the disks?
 
 ```bash
-# Disk space usage
 df -h
-
-# Directory size
-du -sh /var/log/
-du -sh /home/*     # each user's home size
-
-# Top 10 largest directories
-du -h /var | sort -rh | head -10
-
-# Disk I/O statistics
-iostat 1          # install: apt install sysstat
-iostat -x 1       # extended stats
-
-# Real-time I/O per process
-iotop             # install: apt install iotop
 ```
+
+`df` stands for "Disk Free". The `-h` flag makes the sizes human-readable.
+
+**Example output:**
+```
+Filesystem      Size  Used Avail Use% Mounted on
+/dev/sda1        50G   18G   30G  38% /
+/dev/sda2       200G   85G  115G  43% /home
+tmpfs           3.8G     0  3.8G   0% /dev/shm
+```
+
+The `Use%` column is the one to watch. When it hits 90%+, it's time to clean up. At 100%, the system may start failing in unpredictable ways.
+
+---
+
+### `du -sh` — How much space does a folder use?
+
+```bash
+du -sh /var/log/
+```
+
+`du` stands for "Disk Usage". `-s` means "summarize" (one total), `-h` means human-readable.
+
+Find the top 5 largest directories inside `/var`:
+
+```bash
+du -sh /var/*/ 2>/dev/null | sort -rh | head -5
+```
+
+Breaking this down:
+- `du -sh /var/*/` — get the size of each subdirectory in `/var/`
+- `2>/dev/null` — hide error messages (e.g., "permission denied")
+- `sort -rh` — sort in reverse (`-r`) human-readable order (`-h`) — largest first
+- `head -5` — show only the top 5 results
 
 ---
 
 ## System Logs
 
-Linux logs are primarily in `/var/log/` and managed by **systemd journal**.
+When something goes wrong, the first place to look is the logs. Linux writes system events, errors, and application messages to log files.
 
-### Important Log Files
+### Where are the logs?
 
-| File | Contents |
-|------|---------|
-| `/var/log/syslog` | General system messages (Debian/Ubuntu) |
+All logs are under `/var/log/`:
+
+| File | What it records |
+|------|----------------|
+| `/var/log/syslog` | General system messages (Ubuntu/Debian) |
 | `/var/log/messages` | General messages (RHEL/CentOS) |
-| `/var/log/auth.log` | Authentication events |
-| `/var/log/kern.log` | Kernel messages |
-| `/var/log/dmesg` | Boot and hardware messages |
-| `/var/log/apt/` | APT package manager history |
-| `/var/log/nginx/` | Nginx web server logs |
-| `/var/log/mysql/` | MySQL logs |
+| `/var/log/auth.log` | Login attempts, sudo usage, SSH logins |
+| `/var/log/kern.log` | Kernel messages (hardware issues) |
+| `/var/log/dmesg` | Boot messages and hardware detection |
+| `/var/log/apt/history.log` | Package install/remove history |
+| `/var/log/nginx/access.log` | Every web request served by nginx |
+| `/var/log/nginx/error.log` | Nginx errors |
 
-### Viewing Logs
+### Reading logs with `tail` and `grep`
 
 ```bash
-# Tail the syslog in real-time
-tail -f /var/log/syslog
-
-# View authentication log
-sudo tail -100 /var/log/auth.log
-
-# View kernel ring buffer (hardware/boot messages)
-dmesg
-dmesg | grep -i error
-dmesg -T    # human-readable timestamps
-
-# Grep for errors
-grep -i "error\|fail\|critical" /var/log/syslog
+sudo tail -50 /var/log/syslog
 ```
+
+Shows the last 50 lines of the syslog. This is where you start when something just went wrong — the most recent events are at the bottom.
+
+```bash
+sudo tail -f /var/log/syslog
+```
+
+`-f` means "follow" — the terminal keeps updating as new lines are added to the log in real-time. Press `Ctrl + C` to stop. Very useful when you're trying to catch an error as it happens.
+
+```bash
+sudo grep -i "error" /var/log/syslog | tail -20
+```
+
+Searches the syslog for lines containing "error" (case-insensitive with `-i`) and shows the last 20 matches.
 
 ---
 
-## journalctl — systemd Journal
+## journalctl — The Modern Log Tool
+
+Modern Linux uses **systemd** to manage logs. The `journalctl` command reads logs stored by systemd.
+
+### View all logs
 
 ```bash
-# All logs (most recent last)
 journalctl
+```
 
-# Follow in real-time
+This shows everything — usually too much at once. Scroll with arrow keys, press `G` to jump to the end, press `q` to quit.
+
+### Follow logs in real-time
+
+```bash
 journalctl -f
+```
 
-# Logs since last boot
-journalctl -b
+Like `tail -f` but for all system logs.
 
-# Logs from previous boot
-journalctl -b -1
+### View logs for a specific service
 
-# Logs for a specific service
+```bash
 journalctl -u nginx
+```
+
+`-u` means "unit" — shows logs only for the nginx service. Very useful for debugging a specific service.
+
+```bash
 journalctl -u nginx -f
+```
 
-# Logs from the last hour
+Follow nginx logs in real-time.
+
+### Filter by time
+
+```bash
 journalctl --since "1 hour ago"
+```
 
-# Logs in a time range
-journalctl --since "2024-06-01 00:00:00" --until "2024-06-01 23:59:59"
+Shows only logs from the last hour.
 
-# Filter by priority
-journalctl -p err          # errors only
-journalctl -p warning      # warnings and above
+```bash
+journalctl --since "2024-06-20 08:00:00" --until "2024-06-20 09:00:00"
+```
 
-# Show disk usage of journal
+Shows logs between two specific times. Very useful when investigating an incident — you know roughly when it happened, so you narrow the logs to that window.
+
+### Filter by priority (severity)
+
+```bash
+journalctl -p err
+```
+
+Shows only error-level messages and worse. The priorities from worst to best:
+
+| Level | Meaning |
+|-------|---------|
+| `emerg` | System is unusable |
+| `alert` | Must fix immediately |
+| `crit` | Critical condition |
+| `err` | Error |
+| `warning` | Warning |
+| `notice` | Normal but significant |
+| `info` | Informational |
+| `debug` | Debug messages (very verbose) |
+
+### Logs from the last boot
+
+```bash
+journalctl -b
+```
+
+`-b` means "this boot". Shows logs since the last time the system started. Add `-1` for the previous boot:
+
+```bash
+journalctl -b -1
+```
+
+### Check how much disk space the journal uses
+
+```bash
 journalctl --disk-usage
+```
 
-# Limit journal size
-sudo journalctl --vacuum-size=500M
-sudo journalctl --vacuum-time=7d
+To clean up old logs:
+
+```bash
+sudo journalctl --vacuum-size=500M   # keep only 500MB of logs
+sudo journalctl --vacuum-time=7d     # keep only last 7 days of logs
 ```
 
 ---
 
-## Network Monitoring
+## `dmesg` — Kernel and Hardware Messages
 
 ```bash
-# Live network traffic per interface
-ifstat             # install: apt install ifstat
-nethogs            # per-process bandwidth
-
-# Packet-level monitoring
-sudo tcpdump -i eth0
-sudo tcpdump -i eth0 port 80
-sudo tcpdump -i eth0 -w capture.pcap    # save to file
-sudo tcpdump -r capture.pcap            # read from file
-
-# Connection states
-ss -s
-ss -tulnp
-
-# Bandwidth test
-iperf3 -s                  # server
-iperf3 -c 192.168.1.10     # client
+dmesg
 ```
+
+Shows messages from the kernel — especially useful after connecting hardware or after a crash.
+
+```bash
+dmesg | grep -i "error\|fail"
+```
+
+Searches kernel messages for errors and failures.
+
+```bash
+dmesg -T
+```
+
+`-T` adds human-readable timestamps to each line (otherwise they show seconds-since-boot, which is hard to read).
 
 ---
 
-## System Resource Summary Tools
+## Log Rotation — Preventing Logs From Filling Your Disk
+
+Logs grow constantly. If left unchecked, they can fill your disk. **logrotate** automatically archives and compresses old logs.
+
+Configuration is in `/etc/logrotate.conf` and service-specific files in `/etc/logrotate.d/`.
 
 ```bash
-# All-in-one overview
-glances              # install: apt install glances
-nmon                 # install: apt install nmon
-
-# System info overview
-neofetch             # install: apt install neofetch
-inxi -Fxz            # install: apt install inxi
-```
-
----
-
-## Log Rotation
-
-`logrotate` prevents logs from filling up the disk. Config is in `/etc/logrotate.conf` and `/etc/logrotate.d/`.
-
-```bash
-# View logrotate config for nginx
 cat /etc/logrotate.d/nginx
-
-# Manual run (test mode)
-sudo logrotate -d /etc/logrotate.conf
-
-# Force rotation now
-sudo logrotate -f /etc/logrotate.conf
 ```
 
-Example logrotate config:
+A typical config looks like:
 
 ```
-/var/log/myapp/*.log {
-    daily
-    rotate 7
-    compress
-    missingok
-    notifempty
-    create 640 www-data adm
-    postrotate
-        systemctl reload myapp
-    endscript
+/var/log/nginx/*.log {
+    daily          ← rotate every day
+    rotate 7       ← keep 7 old copies
+    compress       ← compress old logs with gzip
+    missingok      ← don't error if log file is missing
+    notifempty     ← don't rotate if the log is empty
 }
 ```
 
----
-
-## Writing a Simple Monitor Script
-
-```bash
-#!/bin/bash
-# system-check.sh — Quick health check
-
-echo "=== System Health Report: $(date) ==="
-
-echo ""
-echo "--- Uptime ---"
-uptime
-
-echo ""
-echo "--- Memory ---"
-free -h
-
-echo ""
-echo "--- Disk ---"
-df -h | grep -v tmpfs
-
-echo ""
-echo "--- Top 5 CPU Processes ---"
-ps aux --sort=-%cpu | head -6
-
-echo ""
-echo "--- Top 5 Memory Processes ---"
-ps aux --sort=-%mem | head -6
-
-echo ""
-echo "--- Recent Errors ---"
-sudo journalctl -p err --since "1 hour ago" --no-pager | tail -10
-```
+You don't usually need to change this — the defaults handle it well. But if a service's logs are growing too fast, this is where you'd tighten the rotation policy.
 
 ---
 

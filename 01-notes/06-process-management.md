@@ -7,244 +7,359 @@
 
 ## What is a Process?
 
-A **process** is a running instance of a program. Every process has:
-- A unique **PID** (Process ID)
-- A **PPID** (Parent Process ID)
-- An owner (UID)
-- A state (running, sleeping, zombie, stopped)
+Every time you run a program — open a browser, start a web server, run a script — Linux creates a **process**. A process is just a running program. The system can run hundreds or thousands of processes at the same time.
 
-### Process States
+Each process is given:
+- A unique **PID** (Process ID) — a number that identifies it
+- A **PPID** (Parent Process ID) — the PID of the process that started it
+- An owner (the user who started it)
+- A current state (running, sleeping, stopped, etc.)
 
-| State | Symbol | Meaning |
-|-------|--------|---------|
-| Running | R | Actively using CPU |
-| Sleeping | S | Waiting for I/O or event |
-| Disk Sleep | D | Uninterruptible sleep |
-| Stopped | T | Paused by signal |
-| Zombie | Z | Finished but not reaped by parent |
+When you open a terminal and run `ls`, Linux creates a new process with a PID, runs the command, and then the process ends. Long-running programs like web servers are processes that keep running until you stop them.
 
 ---
 
 ## Viewing Processes
 
+### `ps` — Snapshot of running processes
+
 ```bash
-# Snapshot of running processes
 ps
-
-# All processes, full format
-ps aux
-
-# Process tree (shows parent-child relationships)
-ps auxf
-pstree
-
-# Find processes by name
-ps aux | grep nginx
-pgrep nginx
-
-# Get PID of a process by name
-pidof nginx
 ```
 
-### `top` — Real-time Process Viewer
+**What it does:** Shows processes running in your *current terminal session*.
+
+**Example output:**
+```
+  PID TTY          TIME CMD
+ 1234 pts/0    00:00:00 bash
+ 5678 pts/0    00:00:00 ps
+```
+
+This only shows two things: your bash shell and the `ps` command itself. Not very useful on its own.
+
+```bash
+ps aux
+```
+
+This is the version you'll actually use. The flags mean:
+- `a` — show processes from **all users** (not just yours)
+- `u` — show in **user-oriented format** (includes username, CPU%, memory%)
+- `x` — include processes with **no terminal** (like background services)
+
+**Example output:**
+```
+USER       PID  %CPU  %MEM    VSZ   RSS TTY   STAT  START   TIME COMMAND
+root         1   0.0   0.1  22520  9876 ?     Ss   Jun19   0:12 /sbin/init
+jahid     1234   0.0   0.1  14780  4120 pts/0 Ss   10:00   0:00 bash
+nginx     2345   0.0   0.2  55232  8192 ?     S    10:05   0:01 nginx: worker
+```
+
+Key columns:
+- `USER` — who owns the process
+- `PID` — the process ID (you need this to kill a process)
+- `%CPU` — how much CPU it's using right now
+- `%MEM` — how much RAM it's using
+- `COMMAND` — what is actually running
+- `STAT` — process state (`S` = sleeping, `R` = running, `Z` = zombie)
+
+---
+
+### Finding a specific process
+
+```bash
+ps aux | grep nginx
+```
+
+Pipes (`|`) the output of `ps aux` into `grep`, which filters it to show only lines containing "nginx".
+
+```bash
+pgrep nginx
+```
+
+`pgrep` is a quicker way to get the PID of a process by name. It just prints the PID number(s).
+
+**Example output:**
+```
+2345
+2346
+```
+
+---
+
+### `top` — Real-time process viewer
 
 ```bash
 top
 ```
 
-Key shortcuts inside `top`:
-- `q` — quit
-- `k` — kill a process (enter PID)
-- `r` — renice (change priority)
-- `M` — sort by memory
-- `P` — sort by CPU
-- `1` — toggle per-CPU view
+**What it does:** Shows a live, updating view of what's consuming your CPU and RAM. New data refreshes every few seconds.
 
-### `htop` — Enhanced top
-
-```bash
-sudo apt install htop
-htop
+```
+top - 14:32:01 up 3 days, load average: 0.12, 0.08, 0.06
+Tasks: 152 total, 1 running, 151 sleeping
+%Cpu(s): 2.1 us, 0.5 sy, 97.4 id
+MiB Mem:   7832.0 total,  4200.0 free,  2100.0 used
+...
+  PID USER     %CPU  %MEM  COMMAND
+ 2345 nginx     1.2   0.2  nginx
+ 1234 jahid     0.8   0.1  bash
 ```
 
-More visual, supports mouse clicks, easier to use than `top`.
+**Useful keyboard shortcuts inside top:**
+- `q` — quit top
+- `k` — kill a process (it will ask for the PID)
+- `M` — sort by memory usage
+- `P` — sort by CPU usage
+- `1` — show individual CPU cores (if you have multiple)
+
+`htop` is a more visual, beginner-friendly version of top. Install it with `sudo apt install htop`.
 
 ---
 
-## Signals
+## Stopping a Process — Signals
 
-Signals are messages sent to processes.
+You communicate with processes by sending them **signals**. Think of signals as messages: "please stop", "reload your config", "die immediately".
 
-| Signal | Number | Action |
-|--------|--------|--------|
-| SIGHUP | 1 | Hangup / reload config |
-| SIGINT | 2 | Interrupt (Ctrl+C) |
-| SIGKILL | 9 | Force kill (cannot be ignored) |
-| SIGTERM | 15 | Graceful termination (default) |
-| SIGSTOP | 19 | Pause process |
-| SIGCONT | 18 | Resume paused process |
+The most important signals:
+
+| Signal | Number | What it does |
+|--------|--------|-------------|
+| SIGTERM | 15 | "Please shut down gracefully." The process can finish what it's doing. This is the default. |
+| SIGKILL | 9 | "Die immediately." The kernel kills the process. The process cannot ignore this. |
+| SIGHUP | 1 | "Reload your configuration." Used for services like nginx. |
+| SIGINT | 2 | Same as pressing `Ctrl + C` in the terminal. |
+
+### `kill` — Send a signal to a process by PID
 
 ```bash
-# Send SIGTERM to PID 1234
-kill 1234
+kill 2345
+```
 
-# Force kill
-kill -9 1234
-kill -SIGKILL 1234
+Sends SIGTERM (graceful shutdown) to PID 2345. This is the polite way to stop something.
 
-# Kill all processes named nginx
+```bash
+kill -9 2345
+```
+
+Sends SIGKILL (force kill) to PID 2345. Use this only when the graceful shutdown doesn't work — the process is frozen or not responding.
+
+### `killall` — Kill all processes with a given name
+
+```bash
 killall nginx
-
-# Kill by pattern
-pkill -f "python script.py"
-
-# Send SIGHUP (reload config) to nginx
-kill -1 $(pidof nginx)
 ```
+
+Sends SIGTERM to every process named `nginx`. Useful when a program has multiple worker processes.
+
+### `pkill` — Kill by pattern
+
+```bash
+pkill -f "python my_script.py"
+```
+
+`-f` matches the full command line. This lets you be specific when multiple Python scripts are running.
 
 ---
 
-## Foreground & Background Jobs
+## Foreground and Background Jobs
+
+Normally when you run a command, your terminal waits for it to finish before giving you the prompt back. That command is running in the **foreground**.
+
+### Running in the background with `&`
 
 ```bash
-# Run a command in the background
-long-running-command &
+sleep 60 &
+```
 
-# List background jobs
+The `&` at the end sends the command to the **background**. Your prompt comes back immediately while `sleep 60` keeps running.
+
+**Output:**
+```
+[1] 5678
+```
+
+`[1]` is the job number and `5678` is the PID.
+
+### Listing background jobs
+
+```bash
 jobs
-
-# Bring a background job to foreground
-fg %1          # %1 is job number from 'jobs'
-
-# Send foreground job to background
-Ctrl + Z       # suspend it first
-bg %1          # then resume in background
-
-# Disconnect a background job from the terminal (keep running after logout)
-nohup long-command &
-
-# Or use disown after backgrounding
-long-command &
-disown
 ```
+
+**Example output:**
+```
+[1]+  Running    sleep 60 &
+```
+
+### Bringing a background job to the foreground
+
+```bash
+fg %1
+```
+
+`%1` refers to job number 1 (from the `jobs` list). The process is now in the foreground again.
+
+### Suspending and resuming
+
+Press `Ctrl + Z` while a foreground process is running to **suspend** (pause) it. Then:
+
+```bash
+bg %1
+```
+
+Resumes the suspended job in the background.
+
+### Running after logout with `nohup`
+
+If you start a background job and then close your terminal, the job is killed. `nohup` (no hangup) prevents this:
+
+```bash
+nohup long-running-script.sh &
+```
+
+The output goes to a file called `nohup.out` in the current directory.
 
 ---
 
-## Process Priority (Nice)
+## systemd — Managing Services
 
-Priority ranges from **-20** (highest) to **19** (lowest). Default is 0.
+Modern Linux uses **systemd** to manage long-running services (web servers, databases, SSH, etc.). These are called **daemons** — programs that run in the background.
 
-```bash
-# Start a command with a specific nice value
-nice -n 10 tar -czf backup.tar.gz /home/
+You control services with the `systemctl` command.
 
-# Change priority of a running process
-renice -n 5 -p 1234
-
-# Lower priority of all processes of a user
-renice -n 10 -u alice
-```
-
----
-
-## systemd & Services
-
-Modern Linux uses **systemd** as the init system. It manages services (daemons) via `systemctl`.
+### Checking the status of a service
 
 ```bash
-# Start a service
-sudo systemctl start nginx
-
-# Stop a service
-sudo systemctl stop nginx
-
-# Restart a service
-sudo systemctl restart nginx
-
-# Reload config without restarting
-sudo systemctl reload nginx
-
-# Enable to start on boot
-sudo systemctl enable nginx
-
-# Disable from starting on boot
-sudo systemctl disable nginx
-
-# Check status
 systemctl status nginx
-
-# View logs for a service
-journalctl -u nginx
-
-# Follow logs in real-time
-journalctl -u nginx -f
-
-# Logs since last boot
-journalctl -u nginx -b
 ```
 
-### Service States
+**Example output:**
+```
+● nginx.service - A high performance web server
+     Loaded: loaded (/lib/systemd/system/nginx.service; enabled)
+     Active: active (running) since Thu 2024-06-20 10:00:00 UTC; 4h ago
+    Process: 1234 ExecStartPre=/usr/sbin/nginx -t
+   Main PID: 1235 (nginx)
+```
+
+Key things to read:
+- `Active: active (running)` — the service is running right now
+- `enabled` — means it will start automatically when the system boots
+- `Main PID: 1235` — the process ID of the main nginx process
+
+### Starting and stopping a service
 
 ```bash
-# List all active services
-systemctl list-units --type=service
-
-# List all services (active + inactive)
-systemctl list-units --type=service --all
-
-# Check if a service is enabled
-systemctl is-enabled nginx
-
-# Check if a service is active
-systemctl is-active nginx
+sudo systemctl start nginx     # start it now
+sudo systemctl stop nginx      # stop it now
+sudo systemctl restart nginx   # stop then start (picks up config changes)
+sudo systemctl reload nginx    # reload config without stopping (smoother)
 ```
+
+`restart` vs `reload`: `restart` fully stops and starts the service (briefly interrupts connections). `reload` tells the service to re-read its config file without stopping — use this when possible.
+
+### Enable/disable a service on boot
+
+```bash
+sudo systemctl enable nginx    # start automatically on every boot
+sudo systemctl disable nginx   # do NOT start automatically on boot
+```
+
+`enable` and `disable` do not start/stop the service right now — they only affect what happens when the machine boots.
+
+### Viewing service logs
+
+```bash
+journalctl -u nginx
+```
+
+`journalctl` is the tool for reading systemd logs. `-u nginx` means "show logs for the nginx unit (service)".
+
+```bash
+journalctl -u nginx -f
+```
+
+`-f` means "follow" — shows new log lines as they appear in real-time, like `tail -f`.
+
+```bash
+journalctl -u nginx --since "1 hour ago"
+```
+
+Shows only the logs from the last hour.
 
 ---
 
-## Scheduling with cron
+## Process Priority — `nice` and `renice`
 
-`cron` runs commands on a schedule.
+When many processes are competing for the CPU, you can give hints about which should get priority. This is called the **nice value**.
+
+- Range: **-20** (highest priority) to **19** (lowest priority)
+- Default: **0**
+- Only root can set negative values (give a process *more* priority than normal)
 
 ```bash
-# Edit your crontab
+nice -n 10 tar -czf backup.tar.gz /home/
+```
+
+Starts the `tar` command with a nice value of 10 (lower priority). Useful for resource-intensive tasks like backups that shouldn't slow down other things.
+
+```bash
+renice -n 5 -p 1234
+```
+
+Changes the priority of an already-running process with PID 1234.
+
+---
+
+## Scheduling Tasks with `cron`
+
+`cron` lets you run commands on a schedule — like a task scheduler. You define jobs in a file called a **crontab**.
+
+```bash
 crontab -e
+```
 
-# List your crontab
+Opens your crontab file in a text editor. Each line is one scheduled job.
+
+### Crontab syntax
+
+```
+MINUTE  HOUR  DAY_OF_MONTH  MONTH  DAY_OF_WEEK  COMMAND
+```
+
+Each field can be:
+- A number: `5` means "at minute 5"
+- `*` (asterisk): means "every" — `*` in the HOUR column means "every hour"
+- `*/5`: means "every 5" (e.g., every 5 minutes)
+- `1,3,5`: a list — means "at 1, 3, and 5"
+
+**Examples:**
+
+```
+# Run at 2:30 AM every day
+30 2 * * * /home/jahid/backup.sh
+
+# Run every hour (at minute 0)
+0 * * * * /home/jahid/check.sh
+
+# Run every 5 minutes
+*/5 * * * * /home/jahid/monitor.sh
+
+# Run every Sunday at midnight
+0 0 * * 0 /home/jahid/weekly-report.sh
+```
+
+View your current crontab:
+
+```bash
 crontab -l
+```
 
-# Remove your crontab
+Remove your crontab (careful — this deletes all your scheduled jobs):
+
+```bash
 crontab -r
-```
-
-### Crontab Syntax
-
-```
-MIN  HOUR  DOM  MON  DOW  COMMAND
-*    *     *    *    *    /path/to/command
-
-# ┌───────── minute (0-59)
-# │ ┌─────── hour (0-23)
-# │ │ ┌───── day of month (1-31)
-# │ │ │ ┌─── month (1-12)
-# │ │ │ │ ┌─ day of week (0-7, 0=Sun)
-# │ │ │ │ │
-# * * * * *  command
-```
-
-Examples:
-
-```
-# Every day at 2:30 AM
-30 2 * * * /usr/bin/backup.sh
-
-# Every hour
-0 * * * * /usr/bin/check.sh
-
-# Every Sunday at midnight
-0 0 * * 0 /usr/bin/weekly.sh
-
-# Every 5 minutes
-*/5 * * * * /usr/bin/monitor.sh
 ```
 
 ---

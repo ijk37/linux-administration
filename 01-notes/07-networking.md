@@ -5,269 +5,392 @@
 
 ---
 
-## Networking Fundamentals
+## Basic Networking Concepts
 
-| Concept | Description |
-|---------|-------------|
-| IP Address | Unique identifier for a device on a network |
-| Subnet Mask | Defines the network portion of an IP |
-| Gateway | Router that connects your network to others |
-| DNS | Translates domain names to IP addresses |
-| MAC Address | Hardware address of a network interface |
-| Port | Virtual endpoint for a service (0–65535) |
+Before diving into commands, here are the key terms you need to understand:
+
+| Term | What it means |
+|------|--------------|
+| **IP Address** | A unique number that identifies a device on a network. Like a home address, but for computers. Example: `192.168.1.10` |
+| **Subnet Mask** | Defines which part of the IP address is the network and which part is the device. Example: `/24` or `255.255.255.0` |
+| **Gateway** | The router that connects your local network to the wider internet. Usually ends in `.1`, e.g., `192.168.1.1` |
+| **DNS** | Translates human-friendly names (like `google.com`) into IP addresses. Like a phone book for the internet. |
+| **Port** | A number that identifies a specific service on a computer. SSH uses port 22, web servers use port 80 (HTTP) or 443 (HTTPS). |
+| **Network Interface** | The hardware or virtual component that connects your machine to a network (e.g., `eth0` = ethernet, `wlan0` = WiFi). |
 
 ---
 
-## Viewing Network Configuration
+## Viewing Your Network Configuration
+
+### `ip addr` — What are my IP addresses?
 
 ```bash
-# Show all network interfaces
 ip addr
-ip a                  # short form
+```
 
-# Show routing table
+Or the short form:
+
+```bash
+ip a
+```
+
+**Example output:**
+```
+1: lo: <LOOPBACK,UP> mtu 65536
+    link/loopback 00:00:00:00:00:00
+    inet 127.0.0.1/8 scope host lo
+
+2: eth0: <BROADCAST,MULTICAST,UP,LOWER_UP> mtu 1500
+    link/ether 52:54:00:ab:cd:ef brd ff:ff:ff:ff:ff:ff
+    inet 192.168.1.10/24 brd 192.168.1.255 scope global eth0
+```
+
+Reading the output:
+- `lo` is the **loopback** interface — a virtual interface that loops back to the same machine. IP `127.0.0.1` always means "this computer itself".
+- `eth0` is your actual ethernet network interface.
+- `inet 192.168.1.10/24` is the IP address. The `/24` is the subnet mask.
+
+---
+
+### `ip route` — What is my default gateway?
+
+```bash
 ip route
-ip r
-
-# Show specific interface
-ip addr show eth0
-
-# Legacy command (older systems)
-ifconfig
-ifconfig eth0
-
-# Show network statistics
-ss -s
-netstat -s            # older
 ```
 
----
-
-## Network Interfaces
-
-```bash
-# Bring interface up/down
-sudo ip link set eth0 up
-sudo ip link set eth0 down
-
-# Assign an IP address (temporary)
-sudo ip addr add 192.168.1.10/24 dev eth0
-
-# Remove an IP
-sudo ip addr del 192.168.1.10/24 dev eth0
-
-# Add a default gateway
-sudo ip route add default via 192.168.1.1
+**Example output:**
+```
+default via 192.168.1.1 dev eth0
+192.168.1.0/24 dev eth0 proto kernel scope link
 ```
 
-### Persistent Configuration
-
-**Ubuntu (Netplan):** `/etc/netplan/*.yaml`
-
-```yaml
-network:
-  version: 2
-  ethernets:
-    eth0:
-      dhcp4: true
-```
-
-Apply: `sudo netplan apply`
-
-**RHEL/CentOS:** `/etc/sysconfig/network-scripts/ifcfg-eth0`
-
-```
-DEVICE=eth0
-BOOTPROTO=static
-IPADDR=192.168.1.10
-NETMASK=255.255.255.0
-GATEWAY=192.168.1.1
-ONBOOT=yes
-```
-
----
-
-## DNS
-
-```bash
-# Look up a hostname
-nslookup google.com
-
-# More detailed DNS query
-dig google.com
-dig google.com MX        # mail records
-dig @8.8.8.8 google.com  # use specific DNS server
-
-# Resolve hostname
-host google.com
-
-# Local DNS config
-cat /etc/resolv.conf
-cat /etc/hosts
-```
-
-### `/etc/hosts` — Local Name Resolution
-
-```
-127.0.0.1   localhost
-192.168.1.50 myserver.local myserver
-```
+The line starting with `default via` tells you the default gateway (`192.168.1.1` here). All traffic that doesn't match another route goes through this gateway to reach the internet.
 
 ---
 
 ## Testing Connectivity
 
+### `ping` — Is this host reachable?
+
 ```bash
-# Ping a host (ICMP)
 ping google.com
-ping -c 4 8.8.8.8        # send only 4 packets
+```
 
-# Trace route to host
+`ping` sends small packets to the target and measures how long it takes to get a response. It's the first tool to use when troubleshooting network problems.
+
+**Example output:**
+```
+PING google.com (142.250.185.78): 56 data bytes
+64 bytes from 142.250.185.78: icmp_seq=0 ttl=118 time=12.4 ms
+64 bytes from 142.250.185.78: icmp_seq=1 ttl=118 time=11.8 ms
+```
+
+- `time=12.4 ms` — how long the round trip took. Lower is better.
+- Press `Ctrl + C` to stop.
+
+```bash
+ping -c 4 google.com
+```
+
+`-c 4` means "send exactly 4 packets, then stop". Without `-c`, ping runs forever until you press Ctrl+C.
+
+**What if ping fails?**
+- No response → the host might be down, or ICMP is blocked by a firewall
+- "Name or service not known" → DNS is broken (your computer can't resolve the hostname to an IP)
+
+---
+
+### `traceroute` — How does traffic get there?
+
+```bash
 traceroute google.com
-tracepath google.com     # no root required
+```
 
-# Test TCP connectivity
-telnet google.com 80     # legacy
-nc -zv google.com 80     # netcat, preferred
-nc -zv google.com 443
+Shows each "hop" (router) that your traffic passes through on its way to the destination. Useful for diagnosing where a connection is being slow or dropped.
 
-# Measure download speed (quick check)
-curl -o /dev/null https://speed.hetzner.de/100MB.bin
+**Example output:**
+```
+1  192.168.1.1 (gateway)        0.5 ms
+2  10.0.0.1    (ISP router)     5.2 ms
+3  ...
+15 142.250.185.78 (google.com)  12.4 ms
+```
+
+If you see `* * *` on a line, that router is not responding to traceroute (often normal — many routers block these probes).
+
+---
+
+### `nc` (netcat) — Test if a port is open
+
+```bash
+nc -zv google.com 80
+```
+
+Breaking this down:
+- `nc` — netcat, the "Swiss Army knife" of networking
+- `-z` — "zero-I/O mode": just check if the port is open, don't send data
+- `-v` — verbose: print what's happening
+- `google.com` — the host
+- `80` — the port to test
+
+**Example output:**
+```
+Connection to google.com 80 port [tcp/http] succeeded!
+```
+
+If you see this, the host is accepting connections on that port. If it says "connection refused" or times out, the port is closed or blocked.
+
+---
+
+## DNS — Translating Names to IPs
+
+### `nslookup` — Simple DNS lookup
+
+```bash
+nslookup google.com
+```
+
+**Example output:**
+```
+Server:     8.8.8.8          ← which DNS server answered
+Address:    8.8.8.8#53
+
+Non-authoritative answer:
+Name:       google.com
+Address:    142.250.185.78   ← the IP address for google.com
 ```
 
 ---
 
-## Ports & Sockets
+### `dig` — Detailed DNS query
 
 ```bash
-# List open ports and listening services
+dig google.com
+```
+
+Gives much more detailed DNS information than `nslookup`. Useful for troubleshooting DNS problems.
+
+```bash
+dig google.com A +short
+```
+
+- `A` — look up A records (IPv4 addresses only)
+- `+short` — print only the result, no extra info
+
+**Output:**
+```
+142.250.185.78
+```
+
+```bash
+dig google.com MX +short
+```
+
+Look up MX records — which mail servers handle email for `google.com`.
+
+---
+
+### DNS configuration files
+
+```bash
+cat /etc/resolv.conf
+```
+
+Shows which DNS server your machine uses. You'll see lines like:
+
+```
+nameserver 8.8.8.8
+nameserver 8.8.4.4
+```
+
+These are Google's public DNS servers.
+
+```bash
+cat /etc/hosts
+```
+
+This file is checked *before* DNS. You can add entries here to override DNS for specific names — useful for development:
+
+```
+127.0.0.1   localhost
+192.168.1.50  mydevserver.local
+```
+
+After adding an entry here, you can use `mydevserver.local` instead of the IP address.
+
+---
+
+## Viewing Open Ports and Connections
+
+### `ss` — What ports is this machine listening on?
+
+```bash
 ss -tulnp
-# -t TCP, -u UDP, -l listening, -n numeric, -p process
-
-# Older equivalent
-netstat -tulnp
-
-# Check if a specific port is in use
-ss -tulnp | grep :80
-lsof -i :80
 ```
 
-### Common Ports
+Each flag has a meaning:
+- `-t` — show TCP connections
+- `-u` — show UDP connections
+- `-l` — show only listening ports (servers waiting for connections)
+- `-n` — show numbers instead of names (e.g., show `80` instead of `http`)
+- `-p` — show which process is using each port
 
-| Port | Protocol | Service |
-|------|----------|---------|
-| 22 | TCP | SSH |
-| 25 | TCP | SMTP (email) |
-| 53 | UDP/TCP | DNS |
-| 80 | TCP | HTTP |
-| 443 | TCP | HTTPS |
-| 3306 | TCP | MySQL |
-| 5432 | TCP | PostgreSQL |
-| 6379 | TCP | Redis |
+**Example output:**
+```
+Netid  State   Recv-Q  Send-Q  Local Address:Port
+tcp    LISTEN  0       128     0.0.0.0:22          → SSH (port 22)
+tcp    LISTEN  0       511     0.0.0.0:80          → nginx (port 80)
+tcp    LISTEN  0       128     127.0.0.1:5432      → PostgreSQL (port 5432, local only)
+```
+
+This tells you exactly which services are accepting connections and on which ports. This is very useful for security auditing.
 
 ---
 
-## Firewall — UFW (Ubuntu)
+## The Firewall — UFW
 
-`ufw` (Uncomplicated Firewall) is a front-end for iptables.
+A firewall controls which network connections are allowed into and out of your machine. **UFW** (Uncomplicated Firewall) is the beginner-friendly firewall tool on Ubuntu.
+
+> **Important:** Before enabling the firewall, always allow SSH first, or you will lock yourself out of a remote server.
+
+### Check firewall status
 
 ```bash
-# Enable/disable firewall
-sudo ufw enable
-sudo ufw disable
+sudo ufw status
+```
 
-# Check status
-sudo ufw status verbose
+Shows whether the firewall is active and lists all the current rules.
 
-# Allow SSH (do this BEFORE enabling!)
+### Allow SSH (do this FIRST if remote)
+
+```bash
 sudo ufw allow ssh
+```
+
+This adds a rule to allow SSH connections (port 22). This is equivalent to:
+
+```bash
 sudo ufw allow 22/tcp
+```
 
-# Allow HTTP and HTTPS
-sudo ufw allow http
-sudo ufw allow https
+### Enable the firewall
 
-# Allow a specific port
+```bash
+sudo ufw enable
+```
+
+Activates the firewall with the rules you've set.
+
+### Allow web traffic
+
+```bash
+sudo ufw allow http      # allows port 80
+sudo ufw allow https     # allows port 443
+```
+
+### Allow a custom port
+
+```bash
 sudo ufw allow 8080/tcp
+```
 
-# Deny a port
+Allows incoming TCP connections on port 8080.
+
+### Block a port
+
+```bash
 sudo ufw deny 23/tcp
+```
 
-# Allow from a specific IP
+Blocks Telnet (port 23) — it should never be exposed anyway.
+
+### Allow from a specific IP only
+
+```bash
 sudo ufw allow from 192.168.1.0/24 to any port 22
+```
 
-# Delete a rule
-sudo ufw delete allow 8080/tcp
+Allows SSH connections **only** from the `192.168.1.x` network. Nobody outside that network can SSH in.
 
-# Reset all rules
-sudo ufw reset
+### View rules with numbers
+
+```bash
+sudo ufw status numbered
+```
+
+Shows rules with numbers so you can delete them by number:
+
+```bash
+sudo ufw delete 3
 ```
 
 ---
 
-## Firewall — firewalld (RHEL/CentOS)
+## Downloading Files
+
+### `wget` — Download a file from the internet
 
 ```bash
-# Check status
-sudo firewall-cmd --state
-
-# List all rules
-sudo firewall-cmd --list-all
-
-# Allow HTTP permanently
-sudo firewall-cmd --permanent --add-service=http
-
-# Allow a port
-sudo firewall-cmd --permanent --add-port=8080/tcp
-
-# Reload after changes
-sudo firewall-cmd --reload
-
-# Remove a service
-sudo firewall-cmd --permanent --remove-service=ftp
-```
-
----
-
-## Downloading & Transferring Files
-
-```bash
-# Download a file
 wget https://example.com/file.zip
-curl -O https://example.com/file.zip
-
-# Download and pipe
-curl -s https://api.example.com/data | jq .
-
-# Copy files over SSH (SCP)
-scp file.txt user@192.168.1.10:/home/user/
-scp -r mydir/ user@192.168.1.10:/home/user/
-
-# Sync directories over SSH (rsync)
-rsync -avz mydir/ user@192.168.1.10:/home/user/mydir/
-rsync -avz --delete src/ dest/   # mirror (deletes extras in dest)
 ```
+
+Downloads `file.zip` to your current directory. You'll see a progress bar.
+
+```bash
+wget -O custom-name.zip https://example.com/file.zip
+```
+
+`-O` (capital O) specifies the output filename.
+
+### `curl` — Transfer data with a URL
+
+`curl` is more flexible than `wget`. It can also send data, not just receive it.
+
+```bash
+curl -O https://example.com/file.zip
+```
+
+Download a file (capital `-O` saves with the original filename).
+
+```bash
+curl https://api.example.com/data
+```
+
+Fetch and print the response of an API to the terminal. Very useful for testing web services.
+
+```bash
+curl -s https://api.ipify.org
+```
+
+`-s` means "silent" — no progress output. This particular URL returns your public IP address.
 
 ---
 
-## Netcat — Swiss Army Knife of Networking
+## Copying Files Between Machines — SCP
+
+`scp` (Secure Copy) copies files over SSH. It uses the same authentication as SSH.
 
 ```bash
-# Listen on a port
-nc -l 9000
-
-# Connect to a listener
-nc 192.168.1.10 9000
-
-# Transfer a file
-# Receiver:
-nc -l 9000 > received.txt
-# Sender:
-nc 192.168.1.10 9000 < file.txt
-
-# Port scan (check if ports are open)
-nc -zv 192.168.1.10 20-25
+scp file.txt jahid@192.168.1.10:/home/jahid/
 ```
+
+Breaking this down:
+- `scp` — the command
+- `file.txt` — the file to copy (local)
+- `jahid@192.168.1.10` — username and IP of the remote machine
+- `:/home/jahid/` — where to put it on the remote machine
+
+```bash
+scp jahid@192.168.1.10:/home/jahid/notes.txt ./
+```
+
+Copy *from* a remote machine *to* the current local directory (`./`).
+
+```bash
+scp -r mydir/ jahid@192.168.1.10:/home/jahid/
+```
+
+`-r` copies a directory recursively.
 
 ---
 
