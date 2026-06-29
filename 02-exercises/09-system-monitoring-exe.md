@@ -1,6 +1,6 @@
 # Exercise 09 — System Monitoring & Logs
 
-**Navigation:** ← [Exercise 08](08-shell-scripting.md) | [Exercises Index](README.md) | Next → [Exercise 10](10-ssh-and-remote-access.md)
+**Navigation:** ← [Exercise 08](08-shell-scripting-exe.md) | [Exercises Index](README.md) | Next → [Exercise 10](10-ssh-and-remote-access-exe.md)
 **Note:** [09 — System Monitoring & Logs](../01-notes/09-system-monitoring.md)
 
 ---
@@ -343,5 +343,5 @@ ok() {
 
 ---
 
-**Navigation:** ← [Exercise 08](08-shell-scripting.md) | [Exercises Index](README.md) | Next → [Exercise 10](10-ssh-and-remote-access.md)
+**Navigation:** ← [Exercise 08](08-shell-scripting-exe.md) | [Exercises Index](README.md) | Next → [Exercise 10](10-ssh-and-remote-access-exe.md)
 **Note:** [09 — System Monitoring & Logs](../01-notes/09-system-monitoring.md)

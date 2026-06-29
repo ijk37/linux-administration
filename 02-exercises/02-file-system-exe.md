@@ -1,6 +1,6 @@
 # Exercise 02 — File System & Navigation
 
-**Navigation:** ← [Exercise 01](01-introduction-to-linux.md) | [Exercises Index](README.md) | Next → [Exercise 03](03-users-and-groups.md)
+**Navigation:** ← [Exercise 01](01-introduction-to-linux-exe.md) | [Exercises Index](README.md) | Next → [Exercise 03](03-users-and-groups-exe.md)
 **Note:** [02 — File System & Navigation](../01-notes/02-file-system.md)
 
 ---
@@ -402,5 +402,5 @@ But don't do this yet — later exercises build on it!
 
 ---
 
-**Navigation:** ← [Exercise 01](01-introduction-to-linux.md) | [Exercises Index](README.md) | Next → [Exercise 03](03-users-and-groups.md)
+**Navigation:** ← [Exercise 01](01-introduction-to-linux-exe.md) | [Exercises Index](README.md) | Next → [Exercise 03](03-users-and-groups-exe.md)
 **Note:** [02 — File System & Navigation](../01-notes/02-file-system.md)

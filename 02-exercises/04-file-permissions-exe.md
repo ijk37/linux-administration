@@ -1,6 +1,6 @@
 # Exercise 04 — File Permissions
 
-**Navigation:** ← [Exercise 03](03-users-and-groups.md) | [Exercises Index](README.md) | Next → [Exercise 05](05-package-management.md)
+**Navigation:** ← [Exercise 03](03-users-and-groups-exe.md) | [Exercises Index](README.md) | Next → [Exercise 05](05-package-management-exe.md)
 **Note:** [04 — File Permissions](../01-notes/04-file-permissions.md)
 
 ---
@@ -424,5 +424,5 @@ How many did you get right?
 
 ---
 
-**Navigation:** ← [Exercise 03](03-users-and-groups.md) | [Exercises Index](README.md) | Next → [Exercise 05](05-package-management.md)
+**Navigation:** ← [Exercise 03](03-users-and-groups-exe.md) | [Exercises Index](README.md) | Next → [Exercise 05](05-package-management-exe.md)
 **Note:** [04 — File Permissions](../01-notes/04-file-permissions.md)

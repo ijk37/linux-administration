@@ -1,7 +1,7 @@
 # 07 — Networking
 
 **Navigation:** ← [06 — Process Management](06-process-management.md) | [Notes Index](README.md) | Next → [08 — Shell Scripting](08-shell-scripting.md)
-**Exercise:** [Exercise 07](../02-exercises/07-networking.md)
+**Exercise:** [Exercise 07](../02-exercises/07-networking-exe.md)
 
 ---
 
@@ -395,4 +395,4 @@ scp -r mydir/ jahid@192.168.1.10:/home/jahid/
 ---
 
 **Navigation:** ← [06 — Process Management](06-process-management.md) | [Notes Index](README.md) | Next → [08 — Shell Scripting](08-shell-scripting.md)
-**Exercise:** [Exercise 07](../02-exercises/07-networking.md)
+**Exercise:** [Exercise 07](../02-exercises/07-networking-exe.md)

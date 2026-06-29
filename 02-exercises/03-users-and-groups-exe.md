@@ -1,6 +1,6 @@
 # Exercise 03 — Users & Groups
 
-**Navigation:** ← [Exercise 02](02-file-system.md) | [Exercises Index](README.md) | Next → [Exercise 04](04-file-permissions.md)
+**Navigation:** ← [Exercise 02](02-file-system-exe.md) | [Exercises Index](README.md) | Next → [Exercise 04](04-file-permissions-exe.md)
 **Note:** [03 — Users & Groups](../01-notes/03-users-and-groups.md)
 
 ---
@@ -375,5 +375,5 @@ Write the commands in order before running them, then check your work.
 
 ---
 
-**Navigation:** ← [Exercise 02](02-file-system.md) | [Exercises Index](README.md) | Next → [Exercise 04](04-file-permissions.md)
+**Navigation:** ← [Exercise 02](02-file-system-exe.md) | [Exercises Index](README.md) | Next → [Exercise 04](04-file-permissions-exe.md)
 **Note:** [03 — Users & Groups](../01-notes/03-users-and-groups.md)

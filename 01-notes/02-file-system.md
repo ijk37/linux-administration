@@ -1,7 +1,7 @@
 # 02 — File System & Navigation
 
 **Navigation:** ← [01 — Introduction](01-introduction-to-linux.md) | [Notes Index](README.md) | Next → [03 — Users & Groups](03-users-and-groups.md)
-**Exercise:** [Exercise 02](../02-exercises/02-file-system.md)
+**Exercise:** [Exercise 02](../02-exercises/02-file-system-exe.md)
 
 ---
 
@@ -478,4 +478,4 @@ Symlinks are used constantly in Linux. For example, `/usr/bin/python` is often a
 ---
 
 **Navigation:** ← [01 — Introduction](01-introduction-to-linux.md) | [Notes Index](README.md) | Next → [03 — Users & Groups](03-users-and-groups.md)
-**Exercise:** [Exercise 02](../02-exercises/02-file-system.md)
+**Exercise:** [Exercise 02](../02-exercises/02-file-system-exe.md)

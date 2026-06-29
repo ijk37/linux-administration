@@ -1,6 +1,6 @@
 # Exercise 05 — Package Management
 
-**Navigation:** ← [Exercise 04](04-file-permissions.md) | [Exercises Index](README.md) | Next → [Exercise 06](06-process-management.md)
+**Navigation:** ← [Exercise 04](04-file-permissions-exe.md) | [Exercises Index](README.md) | Next → [Exercise 06](06-process-management-exe.md)
 **Note:** [05 — Package Management](../01-notes/05-package-management.md)
 
 ---
@@ -306,5 +306,5 @@ Pick **one** package from this list that you find interesting:
 
 ---
 
-**Navigation:** ← [Exercise 04](04-file-permissions.md) | [Exercises Index](README.md) | Next → [Exercise 06](06-process-management.md)
+**Navigation:** ← [Exercise 04](04-file-permissions-exe.md) | [Exercises Index](README.md) | Next → [Exercise 06](06-process-management-exe.md)
 **Note:** [05 — Package Management](../01-notes/05-package-management.md)

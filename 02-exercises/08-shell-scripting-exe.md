@@ -1,6 +1,6 @@
 # Exercise 08 — Shell Scripting
 
-**Navigation:** ← [Exercise 07](07-networking.md) | [Exercises Index](README.md) | Next → [Exercise 09](09-system-monitoring.md)
+**Navigation:** ← [Exercise 07](07-networking-exe.md) | [Exercises Index](README.md) | Next → [Exercise 09](09-system-monitoring-exe.md)
 **Note:** [08 — Shell Scripting](../01-notes/08-shell-scripting.md)
 
 ---
@@ -455,5 +455,5 @@ Total: 2 real user(s)
 
 ---
 
-**Navigation:** ← [Exercise 07](07-networking.md) | [Exercises Index](README.md) | Next → [Exercise 09](09-system-monitoring.md)
+**Navigation:** ← [Exercise 07](07-networking-exe.md) | [Exercises Index](README.md) | Next → [Exercise 09](09-system-monitoring-exe.md)
 **Note:** [08 — Shell Scripting](../01-notes/08-shell-scripting.md)

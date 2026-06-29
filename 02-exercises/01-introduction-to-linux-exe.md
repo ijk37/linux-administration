@@ -1,6 +1,6 @@
 # Exercise 01 — Introduction to Linux
 
-**Navigation:** [Exercises Index](README.md) | Next → [Exercise 02](02-file-system.md)
+**Navigation:** [Exercises Index](README.md) | Next → [Exercise 02](02-file-system-exe.md)
 **Note:** [01 — Introduction to Linux](../01-notes/01-introduction-to-linux.md)
 
 ---
@@ -307,5 +307,5 @@ Try to answer these *without* looking at the notes. Then check your answers.
 
 ---
 
-**Navigation:** [Exercises Index](README.md) | Next → [Exercise 02](02-file-system.md)
+**Navigation:** [Exercises Index](README.md) | Next → [Exercise 02](02-file-system-exe.md)
 **Note:** [01 — Introduction to Linux](../01-notes/01-introduction-to-linux.md)

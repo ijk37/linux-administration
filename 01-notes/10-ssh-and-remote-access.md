@@ -1,7 +1,7 @@
 # 10 — SSH & Remote Access
 
 **Navigation:** ← [09 — System Monitoring](09-system-monitoring.md) | [Notes Index](README.md)
-**Exercise:** [Exercise 10](../02-exercises/10-ssh-and-remote-access.md)
+**Exercise:** [Exercise 10](../02-exercises/10-ssh-and-remote-access-exe.md)
 
 ---
 
@@ -358,4 +358,4 @@ Shows live SSH server logs — you can see exactly why a connection is failing.
 ---
 
 **Navigation:** ← [09 — System Monitoring](09-system-monitoring.md) | [Notes Index](README.md)
-**Exercise:** [Exercise 10](../02-exercises/10-ssh-and-remote-access.md)
+**Exercise:** [Exercise 10](../02-exercises/10-ssh-and-remote-access-exe.md)

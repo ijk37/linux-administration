@@ -1,6 +1,6 @@
 # Exercise 06 — Process Management
 
-**Navigation:** ← [Exercise 05](05-package-management.md) | [Exercises Index](README.md) | Next → [Exercise 07](07-networking.md)
+**Navigation:** ← [Exercise 05](05-package-management-exe.md) | [Exercises Index](README.md) | Next → [Exercise 07](07-networking-exe.md)
 **Note:** [06 — Process Management](../01-notes/06-process-management.md)
 
 ---
@@ -415,5 +415,5 @@ Then write a one-line cron entry that would run a script `~/backup.sh` at 3:00 A
 
 ---
 
-**Navigation:** ← [Exercise 05](05-package-management.md) | [Exercises Index](README.md) | Next → [Exercise 07](07-networking.md)
+**Navigation:** ← [Exercise 05](05-package-management-exe.md) | [Exercises Index](README.md) | Next → [Exercise 07](07-networking-exe.md)
 **Note:** [06 — Process Management](../01-notes/06-process-management.md)

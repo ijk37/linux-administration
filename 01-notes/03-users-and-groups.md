@@ -1,7 +1,7 @@
 # 03 — Users & Groups
 
 **Navigation:** ← [02 — File System](02-file-system.md) | [Notes Index](README.md) | Next → [04 — File Permissions](04-file-permissions.md)
-**Exercise:** [Exercise 03](../02-exercises/03-users-and-groups.md)
+**Exercise:** [Exercise 03](../02-exercises/03-users-and-groups-exe.md)
 
 ---
 
@@ -383,4 +383,4 @@ These are default shell configuration files. If you want every new user to start
 ---
 
 **Navigation:** ← [02 — File System](02-file-system.md) | [Notes Index](README.md) | Next → [04 — File Permissions](04-file-permissions.md)
-**Exercise:** [Exercise 03](../02-exercises/03-users-and-groups.md)
+**Exercise:** [Exercise 03](../02-exercises/03-users-and-groups-exe.md)

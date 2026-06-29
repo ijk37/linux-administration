@@ -1,7 +1,7 @@
 # 04 — File Permissions
 
 **Navigation:** ← [03 — Users & Groups](03-users-and-groups.md) | [Notes Index](README.md) | Next → [05 — Package Management](05-package-management.md)
-**Exercise:** [Exercise 04](../02-exercises/04-file-permissions.md)
+**Exercise:** [Exercise 04](../02-exercises/04-file-permissions-exe.md)
 
 ---
 
@@ -316,4 +316,4 @@ To make the change permanent, add it to `~/.bashrc`.
 ---
 
 **Navigation:** ← [03 — Users & Groups](03-users-and-groups.md) | [Notes Index](README.md) | Next → [05 — Package Management](05-package-management.md)
-**Exercise:** [Exercise 04](../02-exercises/04-file-permissions.md)
+**Exercise:** [Exercise 04](../02-exercises/04-file-permissions-exe.md)

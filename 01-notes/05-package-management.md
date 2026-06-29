@@ -1,7 +1,7 @@
 # 05 — Package Management
 
 **Navigation:** ← [04 — File Permissions](04-file-permissions.md) | [Notes Index](README.md) | Next → [06 — Process Management](06-process-management.md)
-**Exercise:** [Exercise 05](../02-exercises/05-package-management.md)
+**Exercise:** [Exercise 05](../02-exercises/05-package-management-exe.md)
 
 ---
 
@@ -271,4 +271,4 @@ APT is fine for most things. Snap/Flatpak are useful when a newer version of sof
 ---
 
 **Navigation:** ← [04 — File Permissions](04-file-permissions.md) | [Notes Index](README.md) | Next → [06 — Process Management](06-process-management.md)
-**Exercise:** [Exercise 05](../02-exercises/05-package-management.md)
+**Exercise:** [Exercise 05](../02-exercises/05-package-management-exe.md)

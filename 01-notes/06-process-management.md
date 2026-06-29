@@ -1,7 +1,7 @@
 # 06 — Process Management
 
 **Navigation:** ← [05 — Package Management](05-package-management.md) | [Notes Index](README.md) | Next → [07 — Networking](07-networking.md)
-**Exercise:** [Exercise 06](../02-exercises/06-process-management.md)
+**Exercise:** [Exercise 06](../02-exercises/06-process-management-exe.md)
 
 ---
 
@@ -365,4 +365,4 @@ crontab -r
 ---
 
 **Navigation:** ← [05 — Package Management](05-package-management.md) | [Notes Index](README.md) | Next → [07 — Networking](07-networking.md)
-**Exercise:** [Exercise 06](../02-exercises/06-process-management.md)
+**Exercise:** [Exercise 06](../02-exercises/06-process-management-exe.md)

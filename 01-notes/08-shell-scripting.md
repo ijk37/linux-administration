@@ -1,7 +1,7 @@
 # 08 — Shell Scripting
 
 **Navigation:** ← [07 — Networking](07-networking.md) | [Notes Index](README.md) | Next → [09 — System Monitoring](09-system-monitoring.md)
-**Exercise:** [Exercise 08](../02-exercises/08-shell-scripting.md)
+**Exercise:** [Exercise 08](../02-exercises/08-shell-scripting-exe.md)
 
 ---
 
@@ -443,4 +443,4 @@ chmod +x backup.sh
 ---
 
 **Navigation:** ← [07 — Networking](07-networking.md) | [Notes Index](README.md) | Next → [09 — System Monitoring](09-system-monitoring.md)
-**Exercise:** [Exercise 08](../02-exercises/08-shell-scripting.md)
+**Exercise:** [Exercise 08](../02-exercises/08-shell-scripting-exe.md)

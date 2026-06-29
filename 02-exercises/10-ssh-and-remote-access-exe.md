@@ -1,6 +1,6 @@
 # Exercise 10 — SSH & Remote Access
 
-**Navigation:** ← [Exercise 09](09-system-monitoring.md) | [Exercises Index](README.md)
+**Navigation:** ← [Exercise 09](09-system-monitoring-exe.md) | [Exercises Index](README.md)
 **Note:** [10 — SSH & Remote Access](../01-notes/10-ssh-and-remote-access.md)
 
 ---
@@ -394,5 +394,5 @@ Write a script `~/linux-practice/scripts/ssh-audit.sh` that checks SSH security 
 
 ---
 
-**Navigation:** ← [Exercise 09](09-system-monitoring.md) | [Exercises Index](README.md)
+**Navigation:** ← [Exercise 09](09-system-monitoring-exe.md) | [Exercises Index](README.md)
 **Note:** [10 — SSH & Remote Access](../01-notes/10-ssh-and-remote-access.md)

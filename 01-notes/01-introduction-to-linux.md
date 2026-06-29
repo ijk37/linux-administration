@@ -1,7 +1,7 @@
 # 01 — Introduction to Linux
 
 **Navigation:** [Notes Index](README.md) | Next → [02 — File System](02-file-system.md)
-**Exercise:** [Exercise 01](../02-exercises/01-introduction-to-linux.md)
+**Exercise:** [Exercise 01](../02-exercises/01-introduction-to-linux-exe.md)
 
 ---
 
@@ -303,4 +303,4 @@ This searches all man page descriptions and lists commands related to your keywo
 ---
 
 **Navigation:** [Notes Index](README.md) | Next → [02 — File System](02-file-system.md)
-**Exercise:** [Exercise 01](../02-exercises/01-introduction-to-linux.md)
+**Exercise:** [Exercise 01](../02-exercises/01-introduction-to-linux-exe.md)

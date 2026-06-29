@@ -1,6 +1,6 @@
 # Exercise 07 — Networking
 
-**Navigation:** ← [Exercise 06](06-process-management.md) | [Exercises Index](README.md) | Next → [Exercise 08](08-shell-scripting.md)
+**Navigation:** ← [Exercise 06](06-process-management-exe.md) | [Exercises Index](README.md) | Next → [Exercise 08](08-shell-scripting-exe.md)
 **Note:** [07 — Networking](../01-notes/07-networking.md)
 
 ---
@@ -405,5 +405,5 @@ chmod +x ~/linux-practice/scripts/port-check.sh
 
 ---
 
-**Navigation:** ← [Exercise 06](06-process-management.md) | [Exercises Index](README.md) | Next → [Exercise 08](08-shell-scripting.md)
+**Navigation:** ← [Exercise 06](06-process-management-exe.md) | [Exercises Index](README.md) | Next → [Exercise 08](08-shell-scripting-exe.md)
 **Note:** [07 — Networking](../01-notes/07-networking.md)
