@@ -53,11 +53,9 @@ Let's decode the first column character by character:
 
 ```
 - r w x r - x r - -
-│ │ │ │ │ │ │ │ │ │
-│ └─┴─┴─┘ └─┴─┴─┘ └─┴─┴─┘
-│  owner   group   others
-│
-└── File type: - = regular file, d = directory, l = symlink
+│ └─┬─┘ └─┬─┘ └─┬─┘
+│  owner  group others
+└── file type: - = regular file, d = directory, l = symlink
 ```
 
 For `script.sh` with `-rwxr-xr--`:
