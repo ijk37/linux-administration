@@ -8,8 +8,9 @@ A structured, self-paced curriculum for learning Linux system administration —
 |--------|----------|
 | [01-notes](01-notes/README.md) | Topic-based markdown notes |
 | [02-exercises](02-exercises/README.md) | Practice exercises for each note |
-| [03-mini-projects](03-mini-projects/README.md) | Hands-on mini projects |
-| [04-resources](04-resources/) | Reference PDFs and links |
+| [03-quiz](03-quiz/README.md) | Interactive MCQ quizzes (GitHub Pages) |
+| [04-mini-projects](04-mini-projects/README.md) | Hands-on mini projects |
+| [05-resources](05-resources/) | Reference PDFs and links |
 
 ## Topics Covered
 
@@ -20,15 +21,16 @@ A structured, self-paced curriculum for learning Linux system administration —
 5. Package Management
 6. Process Management
 7. Networking
-8. Shell Scripting
+8. Shell Scripting (Basics · Conditionals · Loops · Functions)
 9. System Monitoring & Logs
 10. SSH & Remote Access
 
 ## How to Use
 
-- Read a note in `01-notes/`
-- Practice with the matching exercise in `02-exercises/`
-- Reinforce learning with a mini project in `03-mini-projects/`
+1. Read a note in `01-notes/`
+2. Practice with the matching exercise in `02-exercises/`
+3. Test yourself with the quiz in `03-quiz/`
+4. Reinforce learning with a mini project in `04-mini-projects/`
 
 ## Prerequisites
 

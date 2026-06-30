@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Linux Admin — Quiz Hub</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: #0f1117;
+      color: #e2e8f0;
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 2.5rem;
+    }
+
+    header h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      color: #f8fafc;
+      letter-spacing: -0.5px;
+    }
+
+    header p {
+      margin-top: 0.5rem;
+      color: #94a3b8;
+      font-size: 1rem;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1rem;
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .card {
+      background: #1e2231;
+      border: 1px solid #2d3348;
+      border-radius: 12px;
+      padding: 1.25rem 1.5rem;
+      cursor: pointer;
+      text-decoration: none;
+      color: inherit;
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      transition: border-color 0.15s, background 0.15s, transform 0.1s;
+    }
+
+    .card:hover {
+      border-color: #4f8ef7;
+      background: #1a2540;
+      transform: translateY(-2px);
+    }
+
+    .card-icon {
+      font-size: 1.6rem;
+      flex-shrink: 0;
+    }
+
+    .card-body .topic-id {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: #4f8ef7;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    .card-body .topic-title {
+      font-size: 0.95rem;
+      font-weight: 600;
+      color: #e2e8f0;
+      margin-top: 0.15rem;
+    }
+
+    .card-body .q-count {
+      font-size: 0.8rem;
+      color: #64748b;
+      margin-top: 0.2rem;
+    }
+
+    footer {
+      text-align: center;
+      margin-top: 3rem;
+      color: #475569;
+      font-size: 0.85rem;
+    }
+  </style>
+</head>
+<body>
+
+<header>
+  <h1>🐧 Linux Administration — Quiz Hub</h1>
+  <p>Select a topic to test your knowledge</p>
+</header>
+
+<div class="grid" id="grid"></div>
+
+<footer>10 questions per topic &nbsp;·&nbsp; Instant scoring &nbsp;·&nbsp; Review wrong answers</footer>
+
+<script src="data.js"></script>
+<script>
+  const ICONS = {
+    "01": "🖥️", "02": "📁", "03": "👤", "04": "🔒",
+    "05": "📦", "06": "⚙️", "07": "🌐",
+    "08-01": "📝", "08-02": "🔀", "08-03": "🔁", "08-04": "🧩",
+    "09": "📊", "10": "🔑",
+  };
+
+  const grid = document.getElementById("grid");
+
+  TOPICS.forEach(topic => {
+    const qs = QUESTIONS[topic.id] || [];
+    const a = document.createElement("a");
+    a.className = "card";
+    a.href = `quiz.html?topic=${topic.id}`;
+    a.innerHTML = `
+      <div class="card-icon">${ICONS[topic.id] || "📋"}</div>
+      <div class="card-body">
+        <div class="topic-id">Topic ${topic.id}</div>
+        <div class="topic-title">${topic.title}</div>
+        <div class="q-count">${qs.length} questions</div>
+      </div>`;
+    grid.appendChild(a);
+  });
+</script>
+</body>
+</html>
