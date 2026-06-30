@@ -8,7 +8,7 @@ A structured, self-paced curriculum for learning Linux system administration —
 |--------|----------|
 | [01-notes](01-notes/README.md) | Topic-based markdown notes |
 | [02-exercises](02-exercises/README.md) | Practice exercises for each note |
-| [03-quiz](03-quiz/README.md) | Interactive MCQ quizzes (GitHub Pages) |
+| [03-quiz](03-quiz/README.md) | Interactive MCQ quizzes — [open quiz site](https://ijk37.github.io/linux-administration/03-quiz/) |
 | [04-mini-projects](04-mini-projects/README.md) | Hands-on mini projects |
 | [05-resources](05-resources/) | Reference PDFs and links |
 

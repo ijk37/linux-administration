@@ -6,7 +6,7 @@ Test your Linux administration knowledge with interactive MCQ quizzes.
 
 ---
 
-**13 topic quizzes + 5 final mixed quizzes — 20 questions each, instant scoring.**
+**13 topic quizzes + 5 final mixed quizzes — topic quizzes: 20 Qs each · mixed quizzes: 50 Qs each · instant scoring.**
 
 | Quiz Type | Topics |
 |-----------|--------|
