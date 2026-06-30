@@ -12,19 +12,19 @@ Interactive MCQ quizzes for all 13 topics. Built with plain HTML + JavaScript â€
 
 | # | Topic | Questions |
 |---|-------|-----------|
-| 01 | Introduction to Linux | 10 |
-| 02 | File System & Navigation | 10 |
-| 03 | Users & Groups | 10 |
-| 04 | File Permissions | 10 |
-| 05 | Package Management | 10 |
-| 06 | Process Management | 10 |
-| 07 | Networking | 10 |
-| 08-01 | Shell Scripting: Basics | 10 |
-| 08-02 | Shell Scripting: Conditionals | 10 |
-| 08-03 | Shell Scripting: Loops | 10 |
-| 08-04 | Shell Scripting: Functions | 10 |
-| 09 | System Monitoring & Logs | 10 |
-| 10 | SSH & Remote Access | 10 |
+| 01 | Introduction to Linux | 20 |
+| 02 | File System & Navigation | 20 |
+| 03 | Users & Groups | 20 |
+| 04 | File Permissions | 20 |
+| 05 | Package Management | 20 |
+| 06 | Process Management | 20 |
+| 07 | Networking | 20 |
+| 08-01 | Shell Scripting: Basics | 20 |
+| 08-02 | Shell Scripting: Conditionals | 20 |
+| 08-03 | Shell Scripting: Loops | 20 |
+| 08-04 | Shell Scripting: Functions | 20 |
+| 09 | System Monitoring & Logs | 20 |
+| 20 | SSH & Remote Access | 20 |
 
 ## Features
 
