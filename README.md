@@ -25,11 +25,15 @@ A structured, self-paced curriculum for learning Linux system administration —
 9. System Monitoring & Logs
 10. SSH & Remote Access
 
+## 🧪 Quiz
+
+**[👉 Open the Quiz Hub](https://ijk37.github.io/linux-administration/03-quiz/)** — 13 topic quizzes (20 Qs each) + 5 mixed quizzes (50 Qs each), instant scoring, wrong-answer review.
+
 ## How to Use
 
 1. Read a note in `01-notes/`
 2. Practice with the matching exercise in `02-exercises/`
-3. Test yourself with the quiz in `03-quiz/`
+3. Test yourself → [Quiz Hub](https://ijk37.github.io/linux-administration/03-quiz/)
 4. Reinforce learning with a mini project in `04-mini-projects/`
 
 ## Prerequisites

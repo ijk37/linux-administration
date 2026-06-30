@@ -1,14 +1,14 @@
 # Quiz
 
-Interactive MCQ quizzes for all 13 topics. Built with plain HTML + JavaScript — no server required.
+Interactive MCQ quizzes for all 13 topics + 5 final mixed quizzes. Built with plain HTML + JavaScript — no server required.
 
-## How to use
+## [👉 Open the Quiz Hub](https://ijk37.github.io/linux-administration/03-quiz/)
 
 **Locally:** Open `index.html` in your browser.
 
-**On GitHub Pages:** Visit `https://ijk37.github.io/linux-administration/03-quiz/`
+---
 
-## Topics
+## Topic Quizzes — 20 questions each
 
 | # | Topic | Questions |
 |---|-------|-----------|
@@ -24,7 +24,19 @@ Interactive MCQ quizzes for all 13 topics. Built with plain HTML + JavaScript �
 | 08-03 | Shell Scripting: Loops | 20 |
 | 08-04 | Shell Scripting: Functions | 20 |
 | 09 | System Monitoring & Logs | 20 |
-| 20 | SSH & Remote Access | 20 |
+| 10 | SSH & Remote Access | 20 |
+
+## Final Mixed Quizzes — 50 questions each
+
+| Quiz | Focus | Questions |
+|------|-------|-----------|
+| Mixed 1 | Heavy on early topics (01–07) | 50 |
+| Mixed 2 | Moderate lean toward early topics | 50 |
+| Mixed 3 | Balanced across all topics | 50 |
+| Mixed 4 | Moderate lean toward later topics | 50 |
+| Mixed 5 | Heavy on later topics (08–10) | 50 |
+
+---
 
 ## Features
 
@@ -41,7 +53,9 @@ Interactive MCQ quizzes for all 13 topics. Built with plain HTML + JavaScript �
 |------|---------|
 | `index.html` | Quiz hub — topic selector |
 | `quiz.html` | Quiz engine |
-| `data.js` | All questions and answers |
+| `data.js` | Base questions (10 per topic quiz, 15 per mixed quiz) |
+| `data-extra.js` | +10 per topic quiz, +5 per mixed quiz |
+| `data-mixed.js` | +30 per mixed quiz (brings mixed total to 50) |
 
 ---
 
