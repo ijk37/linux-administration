@@ -556,12 +556,6 @@ const MIXED_EXTRA = {
       answer: 1,
       explain: "Every process has a `/proc/PID/fd/` directory containing symlinks to every file descriptor it has open. Useful for recovering deleted files that a process still has open.",
     },
-    {
-      q: "What does the `PIPESTATUS` array contain in bash?",
-      options: ["PIDs of pipe stages", "Exit codes of all commands in the last pipeline", "Pipe buffer sizes", "Status of background pipes"],
-      answer: 1,
-      explain: "`cmd1 | cmd2 | cmd3`. After this, `${PIPESTATUS[0]}` = cmd1's exit, `[1]` = cmd2's, `[2]` = cmd3's. Useful with `set -e` and `set -o pipefail` to catch mid-pipeline failures.",
-    },
   ],
 
   "mixed-4": [
@@ -739,18 +733,6 @@ const MIXED_EXTRA = {
       options: ["Checks for aide updates", "Compares the current filesystem state against the AIDE database — detecting unauthorised file changes", "Checks disk integrity", "Shows aide configuration"],
       answer: 1,
       explain: "AIDE (Advanced Intrusion Detection Environment) creates a cryptographic hash database of files. Running `--check` alerts you to any files that have changed since the baseline was taken.",
-    },
-    {
-      q: "What does `ssh-agent bash` do?",
-      options: ["Starts bash without SSH", "Starts a new bash shell with an SSH agent running in it — you can then `ssh-add` keys", "Runs bash on an SSH server", "Tests SSH from bash"],
-      answer: 1,
-      explain: "`ssh-agent bash` starts an agent and opens a child shell with `SSH_AUTH_SOCK` and `SSH_AGENT_PID` already set. All SSH commands in that shell can use the agent.",
-    },
-    {
-      q: "What does `awk 'BEGIN{FS=\":\"; OFS=\",\"} {print $1,$3}' /etc/passwd` do?",
-      options: ["Reads CSV and prints", "Prints username and UID from /etc/passwd as comma-separated pairs", "Converts /etc/passwd to CSV format completely", "Prints first and third columns without delimiter"],
-      answer: 1,
-      explain: "`BEGIN` block runs before processing. `FS=\":\"` = input field separator. `OFS=\",\"` = output separator. `$1` = username, `$3` = UID. Result: `root,0`, `jahid,1000`, etc.",
     },
     {
       q: "What does `ssh -o ConnectTimeout=5 user@host` do?",
@@ -941,12 +923,6 @@ const MIXED_EXTRA = {
       options: ["Creates a network namespace", "Runs ping inside the 'mynamespace' network namespace — its own isolated network stack", "Tests the namespace configuration", "Pings 8.8.8.8 on behalf of a namespace"],
       answer: 1,
       explain: "Network namespaces give processes an isolated network stack (their own interfaces, routing, firewall rules). This is how Docker containers get separate networking. `ip netns list` shows existing namespaces.",
-    },
-    {
-      q: "What does `sudo bpftrace -e 'tracepoint:syscalls:sys_enter_openat { printf(\"%s\\n\", str(args->filename)); }'` do?",
-      options: ["Opens a file", "Traces every file-open syscall system-wide in real-time, printing the filename", "Lists open files", "Blocks file access"],
-      answer: 1,
-      explain: "BPFtrace uses eBPF to attach lightweight programs to kernel tracepoints. This one-liner prints every filename opened by any process — powerful for understanding system behaviour without code changes.",
     },
   ],
 };
