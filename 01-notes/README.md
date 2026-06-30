@@ -11,7 +11,10 @@ Topic-by-topic notes on Linux system administration.
 | 05 | Package Management | [05-package-management.md](05-package-management.md) |
 | 06 | Process Management | [06-process-management.md](06-process-management.md) |
 | 07 | Networking | [07-networking.md](07-networking.md) |
-| 08 | Shell Scripting | [08-shell-scripting.md](08-shell-scripting.md) |
+| 08-01 | Shell Scripting: Basics | [08-01-shell-scripting-basics.md](08-01-shell-scripting-basics.md) |
+| 08-02 | Shell Scripting: Conditionals | [08-02-shell-scripting-conditionals.md](08-02-shell-scripting-conditionals.md) |
+| 08-03 | Shell Scripting: Loops | [08-03-shell-scripting-loops.md](08-03-shell-scripting-loops.md) |
+| 08-04 | Shell Scripting: Functions | [08-04-shell-scripting-functions.md](08-04-shell-scripting-functions.md) |
 | 09 | System Monitoring & Logs | [09-system-monitoring.md](09-system-monitoring.md) |
 | 10 | SSH & Remote Access | [10-ssh-and-remote-access.md](10-ssh-and-remote-access.md) |
 

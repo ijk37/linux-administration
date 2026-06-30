@@ -11,7 +11,10 @@ Practice exercises paired with each notes topic. Complete each exercise after re
 | 05 | Package Management | [05-package-management.md](05-package-management-exe.md) |
 | 06 | Process Management | [06-process-management.md](06-process-management-exe.md) |
 | 07 | Networking | [07-networking.md](07-networking-exe.md) |
-| 08 | Shell Scripting | [08-shell-scripting.md](08-shell-scripting-exe.md) |
+| 08-01 | Shell Scripting: Basics | [08-01-shell-scripting-basics-exe.md](08-01-shell-scripting-basics-exe.md) |
+| 08-02 | Shell Scripting: Conditionals | [08-02-shell-scripting-conditionals-exe.md](08-02-shell-scripting-conditionals-exe.md) |
+| 08-03 | Shell Scripting: Loops | [08-03-shell-scripting-loops-exe.md](08-03-shell-scripting-loops-exe.md) |
+| 08-04 | Shell Scripting: Functions | [08-04-shell-scripting-functions-exe.md](08-04-shell-scripting-functions-exe.md) |
 | 09 | System Monitoring & Logs | [09-system-monitoring.md](09-system-monitoring-exe.md) |
 | 10 | SSH & Remote Access | [10-ssh-and-remote-access.md](10-ssh-and-remote-access-exe.md) |
 
