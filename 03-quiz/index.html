@@ -113,24 +113,41 @@
     "05": "📦", "06": "⚙️", "07": "🌐",
     "08-01": "📝", "08-02": "🔀", "08-03": "🔁", "08-04": "🧩",
     "09": "📊", "10": "🔑",
+    "mixed-1": "🧪", "mixed-2": "🧪", "mixed-3": "🧪",
+    "mixed-4": "🔥", "mixed-5": "🔥",
   };
+
+  const MIXED_IDS = ["mixed-1","mixed-2","mixed-3","mixed-4","mixed-5"];
+
+  const topicTopics = TOPICS.filter(t => !MIXED_IDS.includes(t.id));
+  const mixedTopics = TOPICS.filter(t => MIXED_IDS.includes(t.id));
 
   const grid = document.getElementById("grid");
 
-  TOPICS.forEach(topic => {
-    const qs = QUESTIONS[topic.id] || [];
-    const a = document.createElement("a");
-    a.className = "card";
-    a.href = `quiz.html?topic=${topic.id}`;
-    a.innerHTML = `
-      <div class="card-icon">${ICONS[topic.id] || "📋"}</div>
-      <div class="card-body">
-        <div class="topic-id">Topic ${topic.id}</div>
-        <div class="topic-title">${topic.title}</div>
-        <div class="q-count">${qs.length} questions</div>
-      </div>`;
-    grid.appendChild(a);
-  });
+  function renderCards(list, labelText) {
+    const section = document.createElement("div");
+    section.style.cssText = "grid-column:1/-1;margin:1rem 0 0.25rem;";
+    section.innerHTML = `<p style="font-size:0.75rem;font-weight:700;color:#475569;text-transform:uppercase;letter-spacing:0.08em">${labelText}</p>`;
+    grid.appendChild(section);
+
+    list.forEach(topic => {
+      const qs = QUESTIONS[topic.id] || [];
+      const a = document.createElement("a");
+      a.className = "card";
+      a.href = `quiz.html?topic=${topic.id}`;
+      a.innerHTML = `
+        <div class="card-icon">${ICONS[topic.id] || "📋"}</div>
+        <div class="card-body">
+          <div class="topic-id">Topic ${topic.id}</div>
+          <div class="topic-title">${topic.title}</div>
+          <div class="q-count">${qs.length} questions</div>
+        </div>`;
+      grid.appendChild(a);
+    });
+  }
+
+  renderCards(topicTopics, "Topics");
+  renderCards(mixedTopics, "Final Mixed Quizzes");
 </script>
 </body>
 </html>

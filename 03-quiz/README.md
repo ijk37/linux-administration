@@ -6,7 +6,7 @@ Interactive MCQ quizzes for all 13 topics. Built with plain HTML + JavaScript â€
 
 **Locally:** Open `index.html` in your browser.
 
-**On GitHub Pages:** Visit `https://<your-username>.github.io/linux-administration/03-quiz/`
+**On GitHub Pages:** Visit `https://ijk37.github.io/linux-administration/03-quiz/`
 
 ## Topics
 
