@@ -1,7 +1,7 @@
 # Exercise 08-02 — Shell Scripting: Conditionals
 
 **Navigation:** ← [Exercise 08-01](08-01-shell-scripting-basics-exe.md) | [Exercises Index](README.md) | Next → [Exercise 08-03](08-03-shell-scripting-loops-exe.md)
-**Note:** [08-02 — Conditionals](../01-notes/08-02-shell-scripting-conditionals.md)
+**Note:** [08-02 — Shell Scripting: Conditionals](../01-notes/08-02-shell-scripting-conditionals.md)
 
 ---
 
@@ -234,4 +234,4 @@ Expected output format:
 ---
 
 **Navigation:** ← [Exercise 08-01](08-01-shell-scripting-basics-exe.md) | [Exercises Index](README.md) | Next → [Exercise 08-03](08-03-shell-scripting-loops-exe.md)
-**Note:** [08-02 — Conditionals](../01-notes/08-02-shell-scripting-conditionals.md)
+**Note:** [08-02 — Shell Scripting: Conditionals](../01-notes/08-02-shell-scripting-conditionals.md)

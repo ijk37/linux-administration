@@ -1,6 +1,6 @@
 # 08-04 — Shell Scripting: Functions & Best Practices
 
-**Navigation:** ← [08-03 — Loops](08-03-shell-scripting-loops.md) | [Notes Index](README.md) | Next → [09 — System Monitoring](09-system-monitoring.md)
+**Navigation:** ← [08-03 — Shell Scripting: Loops](08-03-shell-scripting-loops.md) | [Notes Index](README.md) | Next → [09 — System Monitoring](09-system-monitoring.md)
 **Exercise:** [Exercise 08-04](../02-exercises/08-04-shell-scripting-functions-exe.md)
 
 ---
@@ -211,5 +211,5 @@ What this script demonstrates:
 
 ---
 
-**Navigation:** ← [08-03 — Loops](08-03-shell-scripting-loops.md) | [Notes Index](README.md) | Next → [09 — System Monitoring](09-system-monitoring.md)
+**Navigation:** ← [08-03 — Shell Scripting: Loops](08-03-shell-scripting-loops.md) | [Notes Index](README.md) | Next → [09 — System Monitoring](09-system-monitoring.md)
 **Exercise:** [Exercise 08-04](../02-exercises/08-04-shell-scripting-functions-exe.md)

@@ -1,7 +1,7 @@
 # Exercise 08-04 — Shell Scripting: Functions & Best Practices
 
 **Navigation:** ← [Exercise 08-03](08-03-shell-scripting-loops-exe.md) | [Exercises Index](README.md) | Next → [Exercise 09](09-system-monitoring-exe.md)
-**Note:** [08-04 — Functions](../01-notes/08-04-shell-scripting-functions.md)
+**Note:** [08-04 — Shell Scripting: Functions](../01-notes/08-04-shell-scripting-functions.md)
 
 ---
 
@@ -404,4 +404,4 @@ Total: 2 real user(s)
 ---
 
 **Navigation:** ← [Exercise 08-03](08-03-shell-scripting-loops-exe.md) | [Exercises Index](README.md) | Next → [Exercise 09](09-system-monitoring-exe.md)
-**Note:** [08-04 — Functions](../01-notes/08-04-shell-scripting-functions.md)
+**Note:** [08-04 — Shell Scripting: Functions](../01-notes/08-04-shell-scripting-functions.md)

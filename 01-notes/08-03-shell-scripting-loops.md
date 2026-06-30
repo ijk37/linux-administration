@@ -1,6 +1,6 @@
 # 08-03 — Shell Scripting: Loops
 
-**Navigation:** ← [08-02 — Conditionals](08-02-shell-scripting-conditionals.md) | [Notes Index](README.md) | Next → [08-04 — Functions](08-04-shell-scripting-functions.md)
+**Navigation:** ← [08-02 — Shell Scripting: Conditionals](08-02-shell-scripting-conditionals.md) | [Notes Index](README.md) | Next → [08-04 — Shell Scripting: Functions](08-04-shell-scripting-functions.md)
 **Exercise:** [Exercise 08-03](../02-exercises/08-03-shell-scripting-loops-exe.md)
 
 ---
@@ -211,5 +211,5 @@ echo "Done. Renamed $COUNT file(s)."
 
 ---
 
-**Navigation:** ← [08-02 — Conditionals](08-02-shell-scripting-conditionals.md) | [Notes Index](README.md) | Next → [08-04 — Functions](08-04-shell-scripting-functions.md)
+**Navigation:** ← [08-02 — Shell Scripting: Conditionals](08-02-shell-scripting-conditionals.md) | [Notes Index](README.md) | Next → [08-04 — Shell Scripting: Functions](08-04-shell-scripting-functions.md)
 **Exercise:** [Exercise 08-03](../02-exercises/08-03-shell-scripting-loops-exe.md)

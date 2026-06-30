@@ -1,7 +1,7 @@
 # Exercise 08-03 — Shell Scripting: Loops
 
 **Navigation:** ← [Exercise 08-02](08-02-shell-scripting-conditionals-exe.md) | [Exercises Index](README.md) | Next → [Exercise 08-04](08-04-shell-scripting-functions-exe.md)
-**Note:** [08-03 — Loops](../01-notes/08-03-shell-scripting-loops.md)
+**Note:** [08-03 — Shell Scripting: Loops](../01-notes/08-03-shell-scripting-loops.md)
 
 ---
 
@@ -330,4 +330,4 @@ Test it on `~/linux-practice/test-files/` (add a few extra files with different 
 ---
 
 **Navigation:** ← [Exercise 08-02](08-02-shell-scripting-conditionals-exe.md) | [Exercises Index](README.md) | Next → [Exercise 08-04](08-04-shell-scripting-functions-exe.md)
-**Note:** [08-03 — Loops](../01-notes/08-03-shell-scripting-loops.md)
+**Note:** [08-03 — Shell Scripting: Loops](../01-notes/08-03-shell-scripting-loops.md)

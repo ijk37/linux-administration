@@ -1,7 +1,7 @@
 # Exercise 08-01 — Shell Scripting: Basics
 
 **Navigation:** ← [Exercise 07](07-networking-exe.md) | [Exercises Index](README.md) | Next → [Exercise 08-02](08-02-shell-scripting-conditionals-exe.md)
-**Note:** [08-01 — Basics](../01-notes/08-01-shell-scripting-basics.md)
+**Note:** [08-01 — Shell Scripting: Basics](../01-notes/08-01-shell-scripting-basics.md)
 
 ---
 
@@ -253,4 +253,4 @@ Running on: myserver
 ---
 
 **Navigation:** ← [Exercise 07](07-networking-exe.md) | [Exercises Index](README.md) | Next → [Exercise 08-02](08-02-shell-scripting-conditionals-exe.md)
-**Note:** [08-01 — Basics](../01-notes/08-01-shell-scripting-basics.md)
+**Note:** [08-01 — Shell Scripting: Basics](../01-notes/08-01-shell-scripting-basics.md)

@@ -1,6 +1,6 @@
 # 08-02 — Shell Scripting: Conditionals
 
-**Navigation:** ← [08-01 — Basics](08-01-shell-scripting-basics.md) | [Notes Index](README.md) | Next → [08-03 — Loops](08-03-shell-scripting-loops.md)
+**Navigation:** ← [08-01 — Shell Scripting: Basics](08-01-shell-scripting-basics.md) | [Notes Index](README.md) | Next → [08-03 — Shell Scripting: Loops](08-03-shell-scripting-loops.md)
 **Exercise:** [Exercise 08-02](../02-exercises/08-02-shell-scripting-conditionals-exe.md)
 
 ---
@@ -140,5 +140,5 @@ fi
 
 ---
 
-**Navigation:** ← [08-01 — Basics](08-01-shell-scripting-basics.md) | [Notes Index](README.md) | Next → [08-03 — Loops](08-03-shell-scripting-loops.md)
+**Navigation:** ← [08-01 — Shell Scripting: Basics](08-01-shell-scripting-basics.md) | [Notes Index](README.md) | Next → [08-03 — Shell Scripting: Loops](08-03-shell-scripting-loops.md)
 **Exercise:** [Exercise 08-02](../02-exercises/08-02-shell-scripting-conditionals-exe.md)

@@ -1,6 +1,6 @@
 # 08-01 — Shell Scripting: Basics
 
-**Navigation:** ← [07 — Networking](07-networking.md) | [Notes Index](README.md) | Next → [08-02 — Conditionals](08-02-shell-scripting-conditionals.md)
+**Navigation:** ← [07 — Networking](07-networking.md) | [Notes Index](README.md) | Next → [08-02 — Shell Scripting: Conditionals](08-02-shell-scripting-conditionals.md)
 **Exercise:** [Exercise 08-01](../02-exercises/08-01-shell-scripting-basics-exe.md)
 
 ---
@@ -158,5 +158,5 @@ echo "scale=2; 10 / 3" | bc    # prints 3.33
 
 ---
 
-**Navigation:** ← [07 — Networking](07-networking.md) | [Notes Index](README.md) | Next → [08-02 — Conditionals](08-02-shell-scripting-conditionals.md)
+**Navigation:** ← [07 — Networking](07-networking.md) | [Notes Index](README.md) | Next → [08-02 — Shell Scripting: Conditionals](08-02-shell-scripting-conditionals.md)
 **Exercise:** [Exercise 08-01](../02-exercises/08-01-shell-scripting-basics-exe.md)

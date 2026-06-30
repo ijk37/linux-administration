@@ -1,6 +1,6 @@
 # 09 — System Monitoring & Logs
 
-**Navigation:** ← [08-04 — Functions](08-04-shell-scripting-functions.md) | [Notes Index](README.md) | Next → [10 — SSH & Remote Access](10-ssh-and-remote-access.md)
+**Navigation:** ← [08-04 — Shell Scripting: Functions](08-04-shell-scripting-functions.md) | [Notes Index](README.md) | Next → [10 — SSH & Remote Access](10-ssh-and-remote-access.md)
 **Exercise:** [Exercise 09](../02-exercises/09-system-monitoring-exe.md)
 
 ---
@@ -329,5 +329,5 @@ You don't usually need to change this — the defaults handle it well. But if a 
 
 ---
 
-**Navigation:** ← [08-04 — Functions](08-04-shell-scripting-functions.md) | [Notes Index](README.md) | Next → [10 — SSH & Remote Access](10-ssh-and-remote-access.md)
+**Navigation:** ← [08-04 — Shell Scripting: Functions](08-04-shell-scripting-functions.md) | [Notes Index](README.md) | Next → [10 — SSH & Remote Access](10-ssh-and-remote-access.md)
 **Exercise:** [Exercise 09](../02-exercises/09-system-monitoring-exe.md)
